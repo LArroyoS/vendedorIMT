@@ -43,6 +43,7 @@
     ESTILOS PERSONALIZADOS
     ============================================-->
     <link rel="stylesheet" href="<?php echo $url; ?>Vistas/css/plantilla.css?1.1">
+    <link rel="stylesheet" href="<?php echo $url; ?>Vistas/css/cabezote.css?1.1">
 
     <!--============================================
     PLUGINS DE JAVASCRIPT
@@ -81,6 +82,8 @@ include "Modulos/cabezote.php";
 <!--============================================
 JAVASCRIPT PERSONALIZADOS
 ============================================-->
+<script src="<?php echo $url; ?>Vistas/js/cabezote.js?1.0"></script>
+<script src="<?php echo $url; ?>Vistas/js/plantilla.js?1.2"></script>
 
 </script>
 
