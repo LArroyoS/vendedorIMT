@@ -3,6 +3,7 @@ PLANTILLA
 ============================================*/
 $rutaOculta = $("#rutaOculta").val();
 
+/*
 $.ajax({
 
     url: $rutaOculta+"ajax/plantilla.ajax.php",
@@ -24,6 +25,7 @@ $.ajax({
     }
 
 });
+*/
 
 /*===========================================
 CUADRICULA O LISTA
