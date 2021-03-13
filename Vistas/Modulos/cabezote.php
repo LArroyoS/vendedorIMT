@@ -1,62 +1,74 @@
 <?php 
 
+    $urlVendedor = Ruta::ctrRuta();
     $urlServidor = Ruta::ctrRutaServidor();
-    $urlTienda = Ruta::ctrRuta();
 
 ?>
 
-<!--=============================================
-TOP
-===============================================-->
-<div class="container-fluid barraSuperior" id="top">
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+    </ul>
 
-    <div class="row">
+</nav>
+<!-- /.navbar -->
 
-        <!--======================================
-        SOCIAL
-        =======================================-->
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="<?php echo htmlspecialchars($urlVendedor); ?>" class="brand-link">
+        <img src="<?php echo htmlspecialchars($urlServidor); ?>/Vistas/img/plantilla/logo.png" alt="IMT Logo"
+            class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Vendedor</span>
+    </a>
 
-        <div class="col-gl-9 col-md-9 col-sm-8 col-xs-12 socal">
-
-            <ul>
-
-                Vendedor IMT
-
-            </ul>
-
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="<?php echo htmlspecialchars($urlServidor); ?>/Vistas/dist/img/user2-160x160.jpg"
+                    class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Alexander Pierce</a>
+            </div>
         </div>
 
-        <!--======================================
-        USUARIO
-        =======================================-->
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a href="<?php echo htmlspecialchars($urlVendedor); ?>" 
+                        class="nav-link <?php echo (($valor=="inicio")?'active':''); ?>">
 
-        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 registro">
+                        <i class="fas fa-home"></i>
+                        <p>
+                            Inicio
+                        </p>
 
-            <ul>
-
-                <li>
-
-                    <img class="rounded-circle" src="<?php echo htmlspecialchars($urlServidor); ?>Vistas\img\usuarios\default\anonymous.png" width="10%">
-
+                    </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?php echo htmlspecialchars($urlVendedor); ?>panel_vendedor" 
+                        class="nav-link <?php echo (($valor=="panel_vendedor")?'active':''); ?>">
 
-                <li>|</li>
-                <li>
+                        <i class="fas fa-cash-register"></i>
+                        <p>
+                            Panel vendedor
+                        </p>
 
-                    <a href="<?php echo htmlspecialchars($urlTienda); ?>perfil">Ver Perfil</a>
-
+                    </a>
                 </li>
-                <li>|</li>
-                <li>
-
-                    <a href="<?php echo htmlspecialchars($urlTienda); ?>salir" class="salir<?php echo htmlspecialchars($_SESSION['modo']); ?>">Salir</a>
-
-                </li>
-
             </ul>
-
-        </div>
-
+        </nav>
+        <!-- /.sidebar-menu -->
     </div>
-
-</div>
+    <!-- /.sidebar -->
+</aside>
