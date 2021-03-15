@@ -3,26 +3,28 @@
     <div class="col-md-8">
         <div class="card border border-dark">
             <div class="card-header">
+
                 <!-- SEARCH FORM -->
-                <form>
-                    <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-navbar border border-dark" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Buscar producto"
+                        aria-label="Search" id="txtBuscarProd">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar border border-dark" id="btnBuscarProd">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
-                </form>
+                </div>
+
             </div>
             <!-- /.card-header -->
-            <div class="card-body p-0 pt-3">
-                <table class="table table-striped">
+            <div class="card-body table-responsive p-0 pt-3">
+                <table class="table table-hover" id="cotizacion">
                     <thead>
+
                         <tr>
-                            <th style="width: 10px">#</th>
+                            <th style="width: 10px"></th>
                             <th width="150">Cantidad</th>
+                            <th>SKU</th>
                             <th>Producto</th>
                             <th>Marca</th>
                             <th>Precio</th>
@@ -30,64 +32,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="number" min="1" pattern="^[0-9]+" class="form-control" name="cantidad[]"
-                                    placeholder="Cantidad">
-                            </td>
-                            <td>
-                                Producto 1
-                            </td>
-                            <td>Marca 1</td>
-                            <td>$00.00</td>
-                            <td>
-                                $00.00
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="number" min="1" pattern="^[0-9]+" class="form-control " name="cantidad[]"
-                                    placeholder="Cantidad">
-                            </td>
-                            <td>
-                                Producto 1
-                            </td>
-                            <td>Marca 1</td>
-                            <td>$00.00</td>
-                            <td>
-                                $00.00
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="number" min="1" pattern="^[0-9]+" class="form-control " name="cantidad[]"
-                                    placeholder="Cantidad">
-                            </td>
-                            <td>
-                                Producto 1
-                            </td>
-                            <td>Marca 1</td>
-                            <td>$00.00</td>
-                            <td>
-                                $00.00
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="number" min="1" pattern="^[0-9]+" class="form-control" name="cantidad[]"
-                                    placeholder="Cantidad">
-                            </td>
-                            <td>
-                                Producto 1
-                            </td>
-                            <td>Marca 1</td>
-                            <td>$00.00</td>
-                            <td>
-                                $00.00
+
+                        <tr id="nulo">
+                            <td colspan="7">
+                                No existen productoa registrados en este momento
                             </td>
                         </tr>
 
@@ -101,11 +49,13 @@
         <!-- this row will not appear when printing -->
         <div class="row no-print">
             <div class="col-12">
-                <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i>
-                    Vaciar Venta
+                <button id="btnVenta" type="button" class="btn btn-success float-right" style="margin-right: 5px;">
+                    <i class="fas fa-money-check-alt"></i>
+                    Generar Venta
                 </button>
-                <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                    <i class="fas fa-download"></i> Generar Venta
+                <button id="btnBorrar" type="button" class="btn btn-danger float-right">
+                    <i class="fas fa-trash-alt"></i>
+                    Borrar
                 </button>
             </div>
         </div>

@@ -42,13 +42,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>Vendedor IMT</title>
 
     <base href="Vistas/">
+
+    <!--=======================================================
+    CSS
+    =========================================================-->
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>/Vistas/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>/Vistas/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?php echo $urlVendedor; ?>Vistas/css/plugins/sweetalert.css">
+
+    <!--=======================================================
+    JS
+    =========================================================-->
+    <script src="<?php echo $urlVendedor; ?>Vistas/js/plugins/sweetalert.min.js"></script>
 
     <!--=======================================================
     MIS ESTILOS
@@ -103,7 +113,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
         <!-- /.content-wrapper -->
 
-        <input type="hidden" value="<?php echo $url; ?>" id="rutaOculta">
+        <input type="hidden" value="<?php echo $urlVendedor; ?>" id="rutaOculta">
 
         <!-- Main Footer -->
         <footer class="main-footer">
@@ -121,11 +131,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/dist/js/adminlte.min.js"></script>
+
+    <!--=======================================================
+    MIS JS
+    =========================================================-->
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoproducto.js?1.6"></script>
 
 </body>
 
