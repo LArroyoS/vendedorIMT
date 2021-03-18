@@ -36,3 +36,11 @@
         $mostrar->ajaxVistaProducto();
 
     }
+    else if(isset($_POST['valor'])){
+
+        $buscar = new AjaxProductos();
+        $mostrar->valor = $_POST["valor"];
+        $mostrar->item = $_POST["item"];
+        $mostrar->ajaxVistaProducto();
+
+    }

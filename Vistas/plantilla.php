@@ -140,7 +140,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!--=======================================================
     MIS JS
     =========================================================-->
-    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoproducto.js?1.6"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoproducto.js?1.3"></script>
 
 </body>
 

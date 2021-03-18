@@ -1,4 +1,9 @@
-<div class="row">
+<?php 
+
+    //print_r($_POST);
+
+?>
+<form method="post" class="row">
 
     <div class="col-md-8">
         <div class="card border border-dark">
@@ -14,6 +19,18 @@
                         </button>
                     </div>
                 </div>
+                <!--=========================================================================
+                SUGERENCIA
+                ===========================================================================-->
+                <div class="sugerencia">
+
+                    <ul>
+
+
+
+                    </ul>
+
+                </div>
 
             </div>
             <!-- /.card-header -->
@@ -23,7 +40,7 @@
 
                         <tr>
                             <th style="width: 10px"></th>
-                            <th width="150">Cantidad</th>
+                            <th width="150" class="cantidad">Cantidad</th>
                             <th>SKU</th>
                             <th>Producto</th>
                             <th>Marca</th>
@@ -34,7 +51,7 @@
                     <tbody>
 
                         <tr id="nulo">
-                            <td colspan="7">
+                            <td colspan="7" class="text-center">
                                 No existen productoa registrados en este momento
                             </td>
                         </tr>
@@ -49,7 +66,7 @@
         <!-- this row will not appear when printing -->
         <div class="row no-print">
             <div class="col-12">
-                <button id="btnVenta" type="button" class="btn btn-success float-right" style="margin-right: 5px;">
+                <button id="btnVenta" type="submit" class="btn btn-success float-right" style="margin-right: 5px;">
                     <i class="fas fa-money-check-alt"></i>
                     Generar Venta
                 </button>
@@ -68,7 +85,7 @@
         <div class="card card-widget widget-user shadow border border-success">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="card-header bg-success">
-                <h1 class="text-center">Total: $ </h1>
+                <h1 class="text-center">Total: $<span id="TotalCoste"></span> </h1>
             </div>
             <div class="card-footer p-3 bg-gris">
 
@@ -76,36 +93,39 @@
 
                     <div class="form-group col-12">
                         <label for="folio">Folio</label>
-                        <input type="text" class="form-control" id="folio" placeholder="folio">
+                        <input type="number" class="form-control" 
+                            id="folio" name="folio" placeholder="folio" 
+                            value="" readonly>
                     </div>
 
                     <div class="form-group col-6">
                         <label for="documento">Documento</label>
-                        <select class="custom-select form-control-border" id="documento">
+                        <select class="custom-select form-control-border" name="documento" id="documento">
                             <option>Seleccione uno</option>
-                            <option>Value 1</option>
-                            <option>Value 2</option>
-                            <option>Value 3</option>
+                            <option selected>PDF</option>
                         </select>
                     </div>
                     <div class="form-group col-6">
                         <label for="pago">Tipo de pago</label>
-                        <select class="custom-select form-control-border" id="pago">
+                        <select class="custom-select form-control-border" name="pago" id="pago">
                             <option>Seleccione uno</option>
-                            <option>Value 1</option>
-                            <option>Value 2</option>
-                            <option>Value 3</option>
+                            <option>OXXO</option>
+                            <option>7 ELEVEN</option>
+                            <option>CLABE interbancaria</option>
                         </select>
                     </div>
 
                     <div class="form-group col-12">
-                        <label for="fechaVenta">Fecha de Venta</label>
-                        <input type="text" class="form-control" id="fechaVenta" placeholder="Fecha de Venta">
+                        <label for="fechaVenta">Fecha de Venta </label>
+                        <input type="date" class="form-control" name="fechaVenta" id="fechaVenta" 
+                            value="" 
+                            placeholder="Fecha de Venta" readonly>
                     </div>
 
                     <div class="form-group col-12">
                         <label for="vendedor">Vendedor</label>
-                        <input type="text" class="form-control" id="vendedor" placeholder="Venderor">
+                        <input type="text" class="form-control" name="vendedor"  id="vendedor" 
+                            value="Vendedor1" placeholder="Venderor" readonly>
                     </div>
 
                 </div>
@@ -113,18 +133,18 @@
                 <div>
 
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="coste">
                             <tr>
                                 <th style="width:50%">Subtotal:</th>
-                                <td>$250.30</td>
+                                <td>$00.00</td>
                             </tr>
                             <tr>
                                 <th>Envio: </th>
-                                <td>$99.00</td>
+                                <td>$00.00</td>
                             </tr>
                             <tr>
                                 <th>Total:</th>
-                                <td>$265.24</td>
+                                <td>$00.00</td>
                             </tr>
                         </table>
                     </div>
@@ -135,4 +155,4 @@
         <!-- /.widget-user -->
     </div>
 
-</div>
+</form>
