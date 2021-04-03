@@ -3,6 +3,45 @@
     class ControladorProductos{
 
         /*=========================================
+        MARCAS
+        ==========================================*/
+        static public function ctrMostrarMarcas($item,$valor){
+
+            $tabla = "marcas";
+
+            $respuesta = ModeloProductos::mdlMostrarMarcas($tabla,$item,$valor);
+
+            return $respuesta;
+
+        }
+
+        /*=========================================
+        MOSTRAR INFO PRODUCTOS
+        ==========================================*/
+        static public function ctrMostrarInfoMarca($item,$valor){
+
+            $tabla = "marcas";
+
+            $respuesta = ModeloProductos::mdlMostrarInfoMarca($tabla,$item,$valor);
+
+            return $respuesta;
+
+        }
+
+        /*=========================================
+        ACTUALIZAR MARCA
+        ==========================================*/
+        static public function ctrActualizarVistaMarca($datos,$item){
+
+            $tabla = "marcas";
+
+            $respuesta = ModeloProductos::mdlActualizarVistaMarca($tabla,$datos,$item);
+
+            return $respuesta;
+
+        }
+
+        /*=========================================
         CATEGORIAS
         ==========================================*/
         static public function ctrMostrarCategorias($item,$valor){
@@ -61,7 +100,7 @@
 
             $tabla = "productos";
 
-            $respuesta = ModeloProductos::mdlListarProducto($tabla,$ordenar,$item,$valor);
+            $respuesta = ModeloProductos::mdlListarProductos($tabla,$ordenar,$item,$valor);
 
             return $respuesta;
 
@@ -114,6 +153,19 @@
             $tabla = "productos";
 
             $respuesta = ModeloProductos::mdlActualizarVistaProducto($tabla,$datos,$item);
+
+            return $respuesta;
+
+        }
+
+        /*=========================================
+        SUGERENCIA PRODUCTO
+        ==========================================*/
+        static public function ctrSugerenciaProducto($valor){
+
+            $tabla = "productos";
+
+            $respuesta = ModeloProductos::mdlSugerenciaProducto($tabla,$valor);
 
             return $respuesta;
 

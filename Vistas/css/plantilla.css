@@ -3,3 +3,19 @@
     background-color: #f8f8ff !important ;
 
 }
+
+.modal-tall .modal-dialog{
+
+    height: 90%;
+
+}
+
+.modal-tall .modal-content{
+
+    height: 100%;
+
+}
+
+input[data-readonly] {
+    pointer-events: none;
+}

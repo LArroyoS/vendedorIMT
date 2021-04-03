@@ -5,6 +5,109 @@
     class ModeloProductos{
 
         /*=========================================
+        MOSTRAR MARCAS
+        ==========================================*/
+        static public function mdlMostrarMarcas($tabla,$item,$valor){
+
+            if($item != null){
+
+                $stmt = Conexion::conectar()
+                    ->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+                $stmt -> bindParam(":".$item,$valor, PDO::PARAM_STR);
+
+                $stmt->execute();
+
+                return $stmt->fetch();
+
+            }else{
+
+                $stmt = Conexion::conectar()
+                    ->prepare("SELECT * FROM $tabla");
+
+                $stmt->execute();
+
+                return $stmt->fetchAll();
+
+            }
+
+            $stmt->close();
+
+            /* Anular objeto */
+            $stmt = null;
+
+        }
+
+        /*=========================================
+        MOSTRAR INFO MARCA
+        ==========================================*/
+        static public function mdlMostrarInfoMarca($tabla, $item, $valor){
+
+            $stmt = Conexion::conectar()
+            ->prepare("SELECT * FROM $tabla WHERE $item = :$item LIMIT 1");
+
+            $stmt -> bindParam(":".$item,$valor, PDO::PARAM_STR);
+
+            try{
+
+                if($stmt->execute()){
+
+                    return $stmt->fetch();
+
+                }else{
+
+                    return false;
+
+                }
+
+            }
+            catch(Exception $e){
+
+                return false;
+
+            }
+
+            return $stmt->fetch();
+
+            $stmt->close();
+
+            /* Anular objeto */
+            $stmt = null;
+
+        }
+
+        /*=========================================
+        ACTUALIZAR MARCA
+        ==========================================*/
+        static public function mdlActualizarVistaMarca($tabla,$datos,$item){
+
+            $stmt = Conexion::conectar()
+            ->prepare("UPDATE $tabla 
+                SET $item = :$item 
+                WHERE ruta = :ruta");
+
+            $stmt -> bindParam(":ruta", $datos['ruta'], PDO::PARAM_STR);
+            $stmt -> bindParam(":".$item , $datos['valor'], PDO::PARAM_STR);
+
+            if($stmt->execute()){
+
+                return "ok";
+
+            }
+            else{
+
+                return "error";
+
+            }
+
+            $stmt->close();
+
+            /* Anular objeto */
+            $stmt = null;
+
+        }
+
+        /*=========================================
         MOSTRAR CATEGORIAS
         ==========================================*/
         static public function mdlMostrarCategorias($tabla,$item,$valor){
@@ -139,7 +242,7 @@
         /*=========================================
         LISTAR PRODUCTOS
         ==========================================*/
-        static public function mdlListarProducto($tabla,$ordenar,$item,$valor){
+        static public function mdlListarProductos($tabla,$ordenar,$item,$valor){
 
             if($item != null){
 
@@ -157,7 +260,7 @@
             else{
 
                 $stmt = Conexion::conectar()
-                ->prepare("SELECT * FROM $tabla ORDER BY $ordenar DESC");
+                ->prepare("SELECT * FROM $tabla ORDER BY $ordenar ASC");
 
                 $stmt->execute();
 
@@ -268,6 +371,55 @@
 
             /* Anular objeto */
             $stmt = null;
+
+        }
+
+        /*=========================================
+        SUGERENCIA PRODUCTOS
+        ==========================================*/
+        static public function mdlSugerenciaProducto($tabla,$valor){
+
+            if($valor!=null || $valor!=""){
+
+                $stmt = Conexion::conectar()
+                ->prepare("SELECT SKU,titulo FROM $tabla 
+                WHERE 
+                (SKU!=null OR SKU!='') AND
+                (SKU like '$valor%' OR
+                titulo like '$valor%')
+                ORDER BY SKU ASC LIMIT 10");
+
+                try{
+
+                    if($stmt->execute()){
+
+                        return $stmt->fetchAll();
+
+                    }
+                    else{
+
+                        return false;
+
+                    }
+
+                }
+                catch(Exception $e){
+
+                    return false;
+
+                }
+
+                $stmt->close();
+
+                /* Anular objeto */
+                $stmt = null;
+
+            }
+            else{
+
+                return false;
+
+            }
 
         }
 

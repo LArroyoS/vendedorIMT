@@ -5,7 +5,7 @@
         public function conectar(){
 
             $host = "localhost";
-            $base = "tiendaimt";
+            $base = "vendedorimt";
             $usuario = "root";
             $clave = "";
             $script = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

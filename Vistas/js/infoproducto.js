@@ -1,10 +1,270 @@
 var venta = false;
 var folio = "0000000000";
 
+/*======================================================
+SUBMIT
+=======================================================*/
+$('#envio').submit(function(e){
+
+    e.preventDefault();
+    var envio = true;
+    inputs = $('input[name]');
+    $.each(inputs,function(key,valor){
+
+        if($(valor).val()==""){
+
+            envio=false;
+
+        }
+
+    });
+
+    if(envio==true && inputs.length>0){
+
+        var src = 'data:application/pdf;base64,';
+        
+        var folio = $('input[name="folio"]').val();
+        var vendedor = $('input[name="vendedor"]').val();
+        var cliente = $('input[name="cliente"]').val();
+        var direccion = $('textarea[name="direccion"]').val();
+        var tel = $('input[name="tel"]').val();
+        var cantidad = $("input[name='cantidad[]']").map(function(){return $(this).val();}).get();
+        var sku = $("input[name='SKU[]']").map(function(){return $(this).val();}).get();
+        $('#pdf .modal-title span').text(folio);
+        
+        var datos = new FormData();
+
+        datos.append('folio', folio);
+        datos.append('vendedor', vendedor);
+        datos.append('cliente', cliente);
+        datos.append('direccion', direccion);
+        datos.append('tel', tel);
+        datos.append('cantidad', cantidad);
+        datos.append('SKU', sku);
+
+        $.ajax({
+
+            url: $rutaOculta+"ajax/cotizacionFlayer.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(respuesta){
+
+                //console.log(respuesta);
+                if(respuesta != "false"){
+
+                    var error = "";
+                    try{
+
+                        respuesta = JSON.parse(respuesta);
+
+                        if(respuesta['resultado'] && 
+                            respuesta['resultado']!='error'){
+
+                            var pdf = src+respuesta['resultado'];
+                            $('#pdf .modal-body object').attr('data',pdf);
+                            $('#pdf .modal-body embed').attr('src',pdf);
+                            $('#modalPdf').click();
+
+                        }
+                        else{;
+
+                            error = respuesta;
+
+                    }
+                    }catch(e){
+
+                        error = respuesta;
+
+                    }
+                    if(error!=""){
+
+                        console.log(error);
+                        /*
+                        swal(
+
+                            {
+        
+                                title: "Error",
+                                text: "Lo sentimos, ocurrio un error, intentelo mas tarde",
+                                type: "error",
+                                confirmButtonText: "Cerrar",
+                                closeOnConfirm: true,
+        
+                            },
+        
+                        );
+                        */
+
+                    }
+
+                }
+                else{
+
+                    swal(
+
+                        {
+    
+                            title: "Error",
+                            text: "Lo sentimos, ocurrio un error, intentelo mas tarde",
+                            type: "error",
+                            confirmButtonText: "Cerrar",
+                            closeOnConfirm: true,
+    
+                        },
+    
+                    );
+
+                }
+
+            }
+
+        });
+
+    }
+    else{
+
+        swal(
+
+            {
+
+                title: "Error",
+                text: "Verifique que todos los campos esten completos",
+                type: "error",
+                confirmButtonText: "Cerrar",
+                closeOnConfirm: true,
+
+            },
+
+        );
+
+    }
+
+    return false;
+
+});
+
+/*=======================================================
+Validacion
+========================================================*/
+$('#cotizacion tbody').on('change','input[type="number"]',function(e){
+
+    e.preventDefault();
+    var valor = $(this).val();
+
+});
+
+$('#cotizacion tbody').on('change','input:checkbox',function(){
+
+    e.preventDefault();
+    var seleccion = $('input:checkbox:checked').length;
+    if(seleccion>0){
+
+        $("#btnBorrar span").text("Borrar Seleccionados");
+        $('#btnBorrar').attr('seleccion','');
+
+    }
+    else{
+
+        $('#btnBorrar').removeAttr('seleccion');
+        $('#btnBorrar span').text('Limpiar');
+
+    }
+
+});
+
+/*=======================================================
+SUGERENCIAS PRODUCTO
+========================================================*/
+$("#txtBuscarProd").bind('keypress',function(e){
+
+    var regex = new RegExp("^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9 ]+$");
+    var key = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+    if(regex.test(key)){
+
+        var valor = $(this).val()+key;
+        $("#sugerencias").empty();
+        //console.log(valor);
+        var datos = new FormData();
+
+        datos.append('sugerencia', valor);
+
+        $.ajax({
+
+            url: $rutaOculta+"ajax/producto.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(respuesta){
+
+                if(respuesta != "false"){
+
+                    respuesta = JSON.parse(respuesta);
+                    //console.log(respuesta.length);
+                    let sugerencia = "";
+                    if(respuesta.length>0){
+
+                        $.each(respuesta,function(key,valor){
+
+                            sugerencia += '<option value="'+valor['SKU']+'">'+valor['SKU']+' '+valor['titulo']+'</option>';
+
+                        });
+
+                    }
+                    else{
+
+                        sugerencia += '<option value="1">No se encontro: '+valor+'</option>';
+
+                    }
+
+                    $("#sugerencias").append(sugerencia);
+
+                }
+                else{
+
+                    swal(
+
+                        {
+    
+                            title: "Error",
+                            text: "Lo sentimos, ocurrio un error, intentelo mas tarde",
+                            type: "error",
+                            confirmButtonText: "Cerrar",
+                            closeOnConfirm: true,
+    
+                        },
+    
+                    );
+
+                }
+
+            }
+
+        });
+
+    }
+    else{
+
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code!=13){
+
+            e.preventDefault();
+            return false;
+
+        }
+
+    }
+
+});
+
 /*=======================================================
 BUSCAR PRODUCTO
 ========================================================*/
-var contador = 0;
 $rutaOculta = $("#rutaOculta").val();
 
 $("#btnBuscarProd").on('click',function(e){
@@ -39,20 +299,20 @@ $("#btnBuscarProd").on('click',function(e){
 
                     fila += '<tr id="'+respuesta['SKU']+'">';
                     fila +=     '<td>';
-                    fila +=         '<input type="checkbox" id="checkboxPrimary1">';
-                    fila +=         '<input type="hidden" value="'+respuesta['id']+'" name="id[]">'
+                    fila +=         '<input type="checkbox">';
                     fila +=     '</td>';
                     fila +=     '<td>';
-                    fila +=         '<input type="number" min="1" pattern="^[0-9]+" class="form-control cantidad" name="cantidad[]"';
+                    fila +=         '<input type="number" min="1" pattern="^[0-9]+" class="form-control" name="cantidad[]"';
                     fila +=             'placeholder="Cantidad" value="1">';
                     fila +=     '</td>';
                     fila +=     '<td>';
                     fila +=         respuesta['SKU'];
+                    fila +=         '<input type="hidden" class="form-control" value="'+respuesta['SKU']+'" name="SKU[]" readonly>';
                     fila +=     '</td>';
                     fila +=     '<td>';
-                    fila +=         respuesta['id_marca'];
+                    fila +=         respuesta['titulo'];
                     fila +=     '</td>';
-                    fila +=     '<td>'+respuesta['tipo']+'</td>';
+                    fila +=     '<td>'+respuesta['id_marca']+'</td>';
                     fila +=     '<td class="precio">$'+parseFloat(respuesta['precio']).toFixed(2)+'</td>';
                     fila +=     '<td class="importe">';
                     fila +=         '';
@@ -73,8 +333,9 @@ $("#btnBuscarProd").on('click',function(e){
 
                 }
                 $("#txtBuscarProd").val('');
-                $('.cantidad').change();
+                $("#sugerencias").empty();
                 VerificarProductos();
+                $('.cantidad').change();
 
             }
             else{
@@ -101,22 +362,37 @@ $("#btnBuscarProd").on('click',function(e){
 
 });
 
-$()
-
 /*=======================================================
 Eliminar Productos
 ========================================================*/
 $("#btnBorrar").on('click',function(e){
 
-    $('#cotizacion tbody input:checked').each(
-        function(){
+    e.preventDefault();
+    var seleccion = $(this).is('[seleccion]');
+    console.log(seleccion);
 
-            var padreSuperior = $(this).closest('tr').remove();
-            $('#coste').change();
-            VerificarProductos();
+    if(seleccion>0){
 
-        }
-    );
+        $('#cotizacion tbody input:checked').each(
+            function(){
+
+                var padreSuperior = $(this).closest('tr').remove();
+                VerificarProductos();
+                $('#coste').change();
+
+            }
+
+        );
+
+    }
+    else{
+
+        $("#cotizacion tbody").empty();
+        VerificarProductos();
+        $('#coste').change();
+
+    }
+
 
 });
 
@@ -138,8 +414,14 @@ function VerificarProductos(){
 
         $("#cotizacion tbody").append(fila);
         $("#fechaVenta").val();
-        $("#folio").val(""); 
+        $("#folio").val("");
+
         venta = false;
+
+        $("#btnVenta").attr('disabled','');
+
+        $('#btnBorrar').removeAttr('seleccion');
+        $('#btnBorrar span').text('Limpiar');
 
     }
     else{
@@ -152,7 +434,7 @@ function VerificarProductos(){
             var elementoFecha = $("#fechaVenta");
             folio = ('0000000000' + (folio+1)).slice(-10);
 
-            console.log(folio);
+            //console.log(folio);
 
             var d = new Date();
 
@@ -164,7 +446,9 @@ function VerificarProductos(){
                 (day<10 ? '0' : '') + day;
 
             elementoFecha.val(output);
-            $("#folio").val(folio); 
+            $("#folio").val(folio);
+
+            $("#btnVenta").removeAttr('disabled');
 
         }
 
@@ -197,10 +481,9 @@ $('#coste').change(function(){
     var elementoTotal = costes.eq(2);
     var elementoCoste = $("#TotalCoste");
 
-    var subtotal = parseFloat(elementoSubtotal.text().replace('$',"")).toFixed(2);
+    var subtotal = parseFloat(CalcularSubtotal())
     var envio = parseFloat(0);
 
-    subtotal = parseFloat(CalcularSubtotal());
     if(subtotal<500 && subtotal>0){
 
         envio = parseFloat("40");
@@ -220,14 +503,30 @@ function CalcularSubtotal(){
 
     var productos = $("#cotizacion tbody tr");
     var subtotal = 0;
-    var precio = 0;
-    for(i=0;i<productos.length; i++){
+    //console.log((productos.length-1)+": "+productos.eq(productos.length-1).html());
+    //console.log("------------------------------------");
+    for(var i=0;i<productos.length; i++){
 
-        //console.log(productos.eq(i).children('td').eq(6));
-        precio =  parseFloat(productos.eq(i).children('td').eq(6).text().replace('$',"")).toFixed(2);
-        subtotal = subtotal+precio;
+        //console.log(i+": "+parseFloat(productos.eq(i).children('td').eq(6).text().replace('$',"")));
+        //console.log(productos.eq(i).find('td').eq(6));
+        var precio = productos.eq(i).find('td').eq(6).text().replace('$',"");
+        var subtotal = Number(subtotal);
+        //console.log(typeof(subtotal)+": "+subtotal);
+        //console.log(typeof(precio)+": "+precio);
+        subtotal += parseFloat(precio);
 
     }
+    //console.log(subtotal);
     return parseFloat(subtotal).toFixed(2);
 
 }
+
+/*=======================================================
+Verificar productos en COTIZACION
+========================================================*/
+$("#btnImprimir").bind('click',function(e){
+
+    $("#areaPdf").get(0).contentWindow.focus();
+    $("#areaPdf").get(0).contentWindow.print();
+
+});

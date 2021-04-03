@@ -11,6 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         $urlVendedor = Ruta::ctrRuta();
         $urlServidor = Ruta::ctrRutaServidor();
+        $icono = ControladorPlantilla::ctrEstiloPlantilla();
 
         /*=============================================  
         CONTENIDO DINAMICO
@@ -34,6 +35,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
 
         }
+
+        echo '<link rel="icon" href="'.$urlServidor.$icono['icono'].'">';
 
     ?>
 
@@ -63,7 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!--=======================================================
     MIS ESTILOS
     =========================================================-->
-    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/css/plantilla.css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/css/plantilla.css?1.2">
 
 </head>
 
@@ -122,9 +125,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
+            <strong>Copyright &copy; 
+                <?php echo '2020-'.date('Y'); ?> 
+                <a href="<?php echo htmlspecialchars($urlVendedor); ?>">Refaccionaria IMT</a>.</strong> Todos los derechos reservados.
         </footer>
+
     </div>
     <!-- ./wrapper -->
 
