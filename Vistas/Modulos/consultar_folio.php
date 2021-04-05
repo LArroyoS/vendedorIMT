@@ -1,43 +1,8 @@
-<!-- this row will not appear when printing -->
-<div class="row no-print pb-3">
-
-    <div class="col-12">
-        <button type="button" class="btn btn-primary btn-block">
-            <i class="fas fa-plus-circle"></i>
-            <span>Nueva Venta</span>
-        </button>
-
-    </div>
-
-</div>
-
 <form id="envio" class="row" autocomplete="off">
 
     <div class="col-md-8">
-
         <div class="card border border-dark">
-            <div class="card-header">
 
-                <!-- SEARCH FORM -->
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="text" placeholder="Buscar producto"
-                        aria-label="Search" id="txtBuscarProd" list="sugerencias">
-                    <!--=========================================================================
-                    SUGERENCIA
-                    ===========================================================================-->
-                    <datalist id="sugerencias">
-
-
-                    </datalist>
-
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar border border-dark" id="btnBuscarProd">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0 pt-3">
                 <table class="table table-hover" id="cotizacion">
@@ -81,20 +46,20 @@
                 <div class="form-group col-12">
                     <label for="cliente">Cliente</label>
                     <input type="text" class="form-control" name="cliente" id="cliente" placeholder="Nombre Cliente"
-                        minxlength="2" maxlength='40' required>
+                        minxlength="2" maxlength='40' readonly>
                 </div>
 
                 <div class="form-group col-12">
                     <label for="direccion">Dirección</label>
                     <textarea name="direccion" id="direccion" class="form-control" placeholder="Direccicon" rows="2"
-                        minlength="40" maxlength="200" style="resize: none;" required></textarea>
+                        minlength="40" maxlength="200" style="resize: none;" readonly></textarea>
 
                 </div>
 
                 <div class="form-group col-12">
                     <label for="tel">Teléfono</label>
                     <input type="tel" class="form-control" name="tel" id="tel" maxlength="10" placeholder="Telefono"
-                        pattern="[0-9]{10}" title="ejemplo: 0000000000" required>
+                        pattern="[0-9]{10}" title="ejemplo: 0000000000" readonly>
                 </div>
 
             </div>
@@ -104,22 +69,14 @@
         <!-- this row will not appear when printing -->
         <div class="row no-print pb-3">
             <div class="col-12">
-
-                <button id="btnVenta" type="submit" class="btn btn-outline-dark float-right mx-2" style="margin-right: 5px;"
+                <button id="btnVenta" type="submit" class="btn btn-success float-right mx-2" style="margin-right: 5px;"
                     disabled>
                     <i class="fas fa-money-check-alt"></i>
-                    <span>Ver PDF</span>
+                    <span>Generar PDF</span>
                 </button>
-
-                <button id="btnVenta" type="submit" class="btn btn-success margin float-right mx-2" style="margin-right: 5px;"
-                    disabled>
-                    <i class="fas fa-money-check-alt"></i>
-                    <span>Terminar Venta</span>
-                </button>
-
                 <button id="btnBorrar" type="button" class="btn btn-danger float-right mx-2">
                     <i class="fas fa-trash-alt"></i>
-                    <span>Borrar Productos</span>
+                    <span>Limpiar Cotizacion</span>
                 </button>
             </div>
         </div>
@@ -132,7 +89,7 @@
         <div class="card card-widget widget-user shadow border border-success">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="card-header bg-success">
-                <h1 class="text-center">Total: $<span id="TotalCoste">00.00</span> </h1>
+                <h1 class="text-center">Total: $<span id="TotalCoste"></span> </h1>
             </div>
             <div class="card-footer p-3 bg-gris">
 
@@ -141,7 +98,7 @@
                     <div class="form-group col-12">
                         <label for="folio">Folio</label>
                         <input type="text" class="form-control" id="folio" name="folio" placeholder="folio" value=""
-                            required data-readonly oninput="check_text(this);">
+                            required>
                     </div>
 
                     <div class="form-group col-12">

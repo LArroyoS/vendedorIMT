@@ -10,7 +10,7 @@ ERROR 404
 
         <p>
             No pudimos encontrar la página que buscaba.
-            Mientras tanto, puede <a href="<?php echo htmlspecialchars($urlVendedor); ?>"> volver al panel </a>
+            Mientras tanto, puede <a href="<?php echo htmlspecialchars($urlVendedor); ?>"> volver a la pagina principal </a>
         </p>
 
     </div>

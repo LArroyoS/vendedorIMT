@@ -31,12 +31,28 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?php echo htmlspecialchars($urlServidor); ?>/Vistas/dist/img/user2-160x160.jpg"
-                    class="img-circle elevation-2" alt="User Image">
+                <?php if($_SESSION['foto'] != ''): ?>
+
+                    <img src="<?php echo htmlspecialchars($urlServidor.$_SESSION['foto']); ?>"
+                        class="img-circle elevation-2" alt="User Image">
+
+                <?php else: ?>
+
+                    <img src="<?php echo htmlspecialchars($urlServidor); ?>Vistas\img\usuarios\default\anonymous.png"
+                            class="img-circle elevation-2" alt="User Image">
+
+                <?php endif; ?>
+
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block"><?php echo htmlspecialchars($_SESSION['nombre'])?></a>
             </div>
+        </div>
+
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+            <a href="<?php echo htmlspecialchars($urlVendedor); ?>salir" class="salir">Salir</a>
+
         </div>
 
         <!-- Sidebar Menu -->
@@ -62,6 +78,17 @@
                         <i class="fas fa-cash-register"></i>
                         <p>
                             Panel vendedor
+                        </p>
+
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo htmlspecialchars($urlVendedor); ?>consultar_folio" 
+                        class="nav-link <?php echo (($valor=="consultar_folio")?'active':''); ?>">
+
+                        <i class="fas fa-ticket-alt"></i>
+                        <p>
+                            Consultar folio
                         </p>
 
                     </a>

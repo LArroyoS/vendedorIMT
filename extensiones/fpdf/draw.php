@@ -12,12 +12,13 @@ class Draw extends FPDF
 
         $this->SetFillColor(12,52,67);
         $this->Rect(0,0,216,34, 'F');
-
-        $this->Image('http://localhost/adminIMT/Vistas/img/plantilla/logo.png',10,4,27);
         
         $this->SetFillColor(255,189,59);
         $this->SetDrawColor(255,189,59);
         $this->Polygon(array(181,0,216,0,216,35),'DF');
+
+        $this->Image('http://localhost/adminIMT/Vistas/img/plantilla/logo.png',10,4,40);
+        $this->Image('http://localhost/adminIMT/Vistas/img/plantilla/imtTexto.png',160,8,40);
 
         $this->SetTextColor(255,189,59);
         $this->SetFont('arlon','B',35);

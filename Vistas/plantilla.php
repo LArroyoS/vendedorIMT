@@ -9,6 +9,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <?php 
 
+        session_start();
+
         $urlVendedor = Ruta::ctrRuta();
         $urlServidor = Ruta::ctrRutaServidor();
         $icono = ControladorPlantilla::ctrEstiloPlantilla();
@@ -16,14 +18,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
         /*=============================================  
         CONTENIDO DINAMICO
         ===============================================*/
-        $valor = "inicio";
+        $valor = "";
+
         if(isset($_GET['ruta'])){
 
             $rutas = explode("/",$_GET['ruta']);
 
             $item = "ruta";
 
-            if($rutas[0] == "panel_vendedor"){
+            if($rutas[0] == "panel_vendedor" ||
+                $rutas[0] == "consultar_folio" ||
+                $rutas[0] == "salir"){
 
                 $valor = $rutas[0];
 
@@ -57,6 +62,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="<?php echo $urlVendedor; ?>Vistas/css/plugins/sweetalert.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="<?php echo $urlVendedor; ?>Vistas/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
     <!--=======================================================
     JS
@@ -71,67 +78,97 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 
 <body class="hold-transition sidebar-mini">
-    <div class="wrapper">
 
-        <?php include "Modulos/cabezote.php"; ?>
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0 text-uppercase"><?php echo htmlspecialchars(str_replace("_", " ", $valor)); ?></h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right text-uppercase">
-                                <li class="breadcrumb-item">
-                                    <a href="<?php echo htmlspecialchars($urlVendedor); ?>">Inicio</a>
-                                </li>
-                                <?php if($valor!='inicio'): ?>
-                                    <li class="breadcrumb-item active">
-                                        <?php echo htmlspecialchars(str_replace("_", " ", $valor)); ?>
-                                    </li>
-                                <?php endif; ?>
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
+    <?php 
+
+        if(
+            (isset($_SESSION['validarSesion']) && $_SESSION['validarSesion'] == 'ok')
+        ): 
+
+            $valor = (($valor!="")? $valor:'inicio');
+
+    ?>
+
+            <div class="wrapper">
+
+                <?php include "Modulos/cabezote.php"; ?>
+                <!-- Content Wrapper. Contains page content -->
+                <div class="content-wrapper">
+                    <!-- Content Header (Page header) -->
+                    <div class="content-header">
+                        <div class="container-fluid">
+                            <div class="row mb-2">
+                                <div class="col-sm-6">
+                                    <h1 class="m-0 text-uppercase"><?php echo htmlspecialchars(str_replace("_", " ", $valor)); ?></h1>
+                                </div><!-- /.col -->
+                                <div class="col-sm-6">
+                                    <ol class="breadcrumb float-sm-right text-uppercase">
+                                        <li class="breadcrumb-item">
+                                            <a href="<?php echo htmlspecialchars($urlVendedor); ?>">Inicio</a>
+                                        </li>
+                                        <?php if($valor!='inicio'): ?>
+                                            <li class="breadcrumb-item active">
+                                                <?php echo htmlspecialchars(str_replace("_", " ", $valor)); ?>
+                                            </li>
+                                        <?php endif; ?>
+                                    </ol>
+                                </div><!-- /.col -->
+                            </div><!-- /.row -->
+                        </div><!-- /.container-fluid -->
+                    </div>
+                    <!-- /.content-header -->
+
+                    <!-- Main content -->
+                    <div class="content">
+                        <div class="container-fluid">
+
+                            <?php 
+
+                                include 'Modulos/'.$valor.'.php'; 
+
+                            ?>
+
+                        </div><!-- /.container-fluid -->
+                    </div>
+                    <!-- /.content -->
+                </div>
+                <!-- /.content-wrapper -->
+
+                <input type="hidden" value="<?php echo $urlVendedor; ?>" id="rutaOculta">
+
+                <!-- Main Footer -->
+                <footer class="main-footer">
+                    <!-- To the right -->
+                    <div class="float-right d-none d-sm-inline">
+                        Anything you want
+                    </div>
+                    <!-- Default to the left -->
+                    <strong>Copyright &copy; 
+                        <?php echo '2020-'.date('Y'); ?> 
+                        <a href="<?php echo htmlspecialchars($urlVendedor); ?>">Refaccionaria IMT</a>.</strong> Todos los derechos reservados.
+                </footer>
+
             </div>
-            <!-- /.content-header -->
+            <!-- ./wrapper -->
 
-            <!-- Main content -->
-            <div class="content">
-                <div class="container-fluid">
+    <?php 
 
-                    <?php 
+        else:
 
-                        include 'Modulos/'.$valor.'.php'; 
+            if($valor==''){
 
-                    ?>
+                include 'Modulos/ingresar.php';  
 
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
+            }
+            else{
 
-        <input type="hidden" value="<?php echo $urlVendedor; ?>" id="rutaOculta">
+                header('Location: '.$urlVendedor); 
 
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
-                Anything you want
-            </div>
-            <!-- Default to the left -->
-            <strong>Copyright &copy; 
-                <?php echo '2020-'.date('Y'); ?> 
-                <a href="<?php echo htmlspecialchars($urlVendedor); ?>">Refaccionaria IMT</a>.</strong> Todos los derechos reservados.
-        </footer>
+            }   
 
-    </div>
-    <!-- ./wrapper -->
+        endif; 
+
+    ?>
 
     <!-- REQUIRED SCRIPTS -->
 
@@ -145,7 +182,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!--=======================================================
     MIS JS
     =========================================================-->
-    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoproducto.js?1.3"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoproducto.js?1.0"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/usuarios.js?1.2"></script>
 
 </body>
 

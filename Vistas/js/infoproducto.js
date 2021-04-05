@@ -81,8 +81,7 @@ $('#envio').submit(function(e){
                     }
                     if(error!=""){
 
-                        console.log(error);
-                        /*
+                        //console.log(error);
                         swal(
 
                             {
@@ -96,7 +95,6 @@ $('#envio').submit(function(e){
                             },
         
                         );
-                        */
 
                     }
 
@@ -156,7 +154,7 @@ $('#cotizacion tbody').on('change','input[type="number"]',function(e){
 
 });
 
-$('#cotizacion tbody').on('change','input:checkbox',function(){
+$('#cotizacion tbody').on('change','input:checkbox',function(e){
 
     e.preventDefault();
     var seleccion = $('input:checkbox:checked').length;
@@ -169,7 +167,7 @@ $('#cotizacion tbody').on('change','input:checkbox',function(){
     else{
 
         $('#btnBorrar').removeAttr('seleccion');
-        $('#btnBorrar span').text('Limpiar');
+        $('#btnBorrar span').text('Borrar Productos');
 
     }
 
@@ -315,7 +313,7 @@ $("#btnBuscarProd").on('click',function(e){
                     fila +=     '<td>'+respuesta['id_marca']+'</td>';
                     fila +=     '<td class="precio">$'+parseFloat(respuesta['precio']).toFixed(2)+'</td>';
                     fila +=     '<td class="importe">';
-                    fila +=         '';
+                    fila +=         '$'+parseFloat(respuesta['precio']).toFixed(2);
                     fila +=     '</td>';
                     fila += '</tr>';
 
@@ -332,10 +330,11 @@ $("#btnBuscarProd").on('click',function(e){
                     elemento.find("td .cantidad").eq(0).val(cantidad);
 
                 }
+
                 $("#txtBuscarProd").val('');
                 $("#sugerencias").empty();
                 VerificarProductos();
-                $('.cantidad').change();
+                $('#coste').change();
 
             }
             else{
@@ -421,7 +420,7 @@ function VerificarProductos(){
         $("#btnVenta").attr('disabled','');
 
         $('#btnBorrar').removeAttr('seleccion');
-        $('#btnBorrar span').text('Limpiar');
+        $('#btnBorrar span').text('Borrar Productos');
 
     }
     else{
@@ -456,7 +455,7 @@ function VerificarProductos(){
 
 };
 
-$('#cotizacion').on('change','input.cantidad',function(e){
+$('#cotizacion').on('change','input[name="cantidad[]"]',function(e){
 
     e.preventDefault();
     var cantidad = parseFloat($(this).val()).toFixed(2);
@@ -491,6 +490,7 @@ $('#coste').change(function(){
     }
 
     total = parseFloat(subtotal+envio);
+    total = Number.isNaN(total)? 0 : total;
 
     elementoSubtotal.text("$"+subtotal.toFixed(2));
     elementoEnvio.text("$"+envio.toFixed(2));
