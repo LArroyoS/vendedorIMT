@@ -1,17 +1,16 @@
-<!-- this row will not appear when printing -->
-<div class="row no-print pb-3">
+<form id="envio" class="row" autocomplete="off">
 
-    <div class="col-12">
-        <button type="button" class="btn btn-primary btn-block">
-            <i class="fas fa-plus-circle"></i>
-            <span>Nueva Venta</span>
-        </button>
+    <div class="col-12 row no-print pb-3">
+
+        <div class="col-12">
+            <button id="btnNV" type="reset" class="btn btn-primary btn-block">
+                <i class="fas fa-plus-circle"></i>
+                <span>Nueva Venta</span>
+            </button>
+
+        </div>
 
     </div>
-
-</div>
-
-<form id="envio" class="row" autocomplete="off">
 
     <div class="col-md-8">
 
@@ -31,7 +30,7 @@
                     </datalist>
 
                     <div class="input-group-append">
-                        <button class="btn btn-navbar border border-dark" id="btnBuscarProd">
+                        <button type="button" class="btn btn-navbar border border-dark" id="btnBuscarProd">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -68,7 +67,7 @@
 
         </div>
 
-        <div class="card border border-dark">
+        <div class="card border border-dark" id="datosClientes">
 
             <div class="card-header">
 
@@ -77,6 +76,28 @@
             </div>
 
             <div class="card-body table-responsive p-0 pt-3">
+
+                <div class="form-group col-12">
+                    <label for="tel">Teléfono</label>
+                    <!-- SEARCH TELEFONO -->
+                    <div class="input-group">
+                        <input type="tel" class="form-control" name="tel" id="tel" maxlength="10" placeholder="Telefono"
+                            pattern="[0-9]{10}" title="ejemplo: 0000000000" required list="sugerenciasCliente">
+                        <!--=========================================================================
+                        SUGERENCIA
+                        ===========================================================================-->
+                        <datalist id="sugerenciasCliente">
+
+
+                        </datalist>
+
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-info border border-dark" id="btnBuscarTel">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group col-12">
                     <label for="cliente">Cliente</label>
@@ -91,12 +112,6 @@
 
                 </div>
 
-                <div class="form-group col-12">
-                    <label for="tel">Teléfono</label>
-                    <input type="tel" class="form-control" name="tel" id="tel" maxlength="10" placeholder="Telefono"
-                        pattern="[0-9]{10}" title="ejemplo: 0000000000" required>
-                </div>
-
             </div>
 
         </div>
@@ -105,14 +120,14 @@
         <div class="row no-print pb-3">
             <div class="col-12">
 
-                <button id="btnVenta" type="submit" class="btn btn-outline-dark float-right mx-2" style="margin-right: 5px;"
-                    disabled>
+                <button id="btnPDF" type="button" class="btn btn-outline-dark float-right mx-2"
+                    style="margin-right: 5px;" disabled>
                     <i class="fas fa-money-check-alt"></i>
                     <span>Ver PDF</span>
                 </button>
 
-                <button id="btnVenta" type="submit" class="btn btn-success margin float-right mx-2" style="margin-right: 5px;"
-                    disabled>
+                <button id="btnVenta" type="submit" class="btn btn-success margin float-right mx-2"
+                    style="margin-right: 5px;" disabled>
                     <i class="fas fa-money-check-alt"></i>
                     <span>Terminar Venta</span>
                 </button>
@@ -132,7 +147,7 @@
         <div class="card card-widget widget-user shadow border border-success">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="card-header bg-success">
-                <h1 class="text-center">Total: $<span id="TotalCoste">00.00</span> </h1>
+                <h1 class="text-center">Total: $<span id="TotalCoste">0.00</span> </h1>
             </div>
             <div class="card-footer p-3 bg-gris">
 
@@ -152,7 +167,10 @@
 
                     <div class="form-group col-12">
                         <label for="vendedor">Vendedor</label>
-                        <input type="text" class="form-control" name="vendedor" id="vendedor" value="Vendedor1"
+                        <h3> 
+                            <?php echo $_SESSION['nombre']; ?>
+                        </h3>
+                        <input type="hidden" class="form-control" name="vendedor" id="vendedor" value="<?php echo $_SESSION['id']; ?>"
                             placeholder="Venderor" readonly>
                     </div>
 
@@ -164,15 +182,15 @@
                         <table class="table" id="coste">
                             <tr>
                                 <th style="width:50%">Subtotal:</th>
-                                <td>$00.00</td>
+                                <td>$0.00</td>
                             </tr>
                             <tr>
                                 <th>Envio: </th>
-                                <td>$00.00</td>
+                                <td>$0.00</td>
                             </tr>
                             <tr>
                                 <th>Total:</th>
-                                <td>$00.00</td>
+                                <td>$0.00</td>
                             </tr>
                         </table>
                     </div>
@@ -185,11 +203,13 @@
 
 </form>
 
-<button id="modalPdf" type="button" style="display:none" class="btn btn-primary" data-toggle="modal" data-target="#pdf">Large
+<button id="modalPdf" type="button" style="display:none" class="btn btn-primary" data-toggle="modal"
+    data-target="#pdf">Large
     modal
 </button>
 
-<div class="modal modal-tall fade" id="pdf" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal modal-tall fade" id="pdf" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
 
     <div class="modal-dialog modal-xl">
 
@@ -206,7 +226,7 @@
 
                 <object id="areaPdf" name="areaPdf" width="100%" height="100%" data="" type="application/pdf">
 
-                    <embed width="100%" height="100%"  src="" type="application/pdf"></embed>
+                    <embed width="100%" height="100%" src="" type="application/pdf"></embed>
 
                 </object>
 

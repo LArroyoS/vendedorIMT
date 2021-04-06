@@ -4,6 +4,43 @@
 
     class ModeloClientes{
 
+        /*=====================================================
+        RESGISTRO DE USUARIO
+        =====================================================*/
+        static public function mdlRegistroUsuario($tabla,$datos){
+
+            $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre,direccion,telefono)
+            VALUE (:nombre, :direccion, :telefono)");
+
+            $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+            $stmt->bindParam(":direccion", $datos["password"], PDO::PARAM_STR);
+            $stmt->bindParam(":telefono", $datos["email"], PDO::PARAM_STR);
+
+            try{
+
+                if($stmt->execute()){
+
+                    return "ok";
+
+                }
+                else{
+
+                    return "error";
+
+                }
+
+            }
+            catch(Exception $e){
+
+                return $e->getMessage();
+
+            }
+
+            $stmt->close();
+            $stmt = null;
+
+        }
+
         /*=========================================
         MOSTRAR INFO Clientes
         ==========================================*/
@@ -76,17 +113,16 @@
         /*=========================================
         SUGERENCIA Clientes
         ==========================================*/
-        static public function mdlSugerenciaCliente($tabla,$valor){
+        static public function mdlSugerenciaClientes($tabla,$valor){
 
             if($valor!=null || $valor!=""){
 
                 $stmt = Conexion::conectar()
-                ->prepare("SELECT SKU,titulo FROM $tabla 
+                ->prepare("SELECT telefono,nombre FROM $tabla 
                 WHERE 
-                (SKU!=null OR SKU!='') AND
-                (SKU like '$valor%' OR
-                titulo like '$valor%')
-                ORDER BY SKU ASC LIMIT 10");
+                (telefono!=null OR telefono!='') AND
+                (telefono like '$valor%')
+                ORDER BY telefono ASC LIMIT 10");
 
                 try{
 

@@ -1,15 +1,28 @@
 <?php
 
-    class ControladorCliente{
+    class ControladorClientes{
+
+        /*=========================================
+        MOSTRAR INSERTAR CLIENTE
+        ==========================================*/
+        static public function ctrInsertarCliente($datos){
+
+            $tabla = "clientes";
+
+            $respuesta = ModeloClientes::mdlMostrarInfoClientes($tabla,$datos);
+
+            return $respuesta;
+
+        }
 
         /*=========================================
         MOSTRAR INFO CLIENTES
         ==========================================*/
-        static public function ctrMostrarInfoClientes($item,$valor){
+        static public function ctrMostrarInfoCliente($item,$valor){
 
             $tabla = "clientes";
 
-            $respuesta = ModeloClientes::mdlMostrarInfoClientes($tabla,$item,$valor);
+            $respuesta = ModeloClientes::mdlMostrarInfoCliente($tabla,$item,$valor);
 
             return $respuesta;
 

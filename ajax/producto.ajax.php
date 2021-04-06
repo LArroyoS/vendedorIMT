@@ -21,11 +21,15 @@
 
             $respuesta = ControladorProductos::ctrMostrarInfoProducto($item,$valor);
 
-            $itemMarca = "id";
-            $valorMarca = isset($respuesta['id_marca'])? $respuesta['id_marca']:null;
-            $marca = ControladorProductos::ctrMostrarInfoMarca($itemMarca,$valorMarca);
+            if($respuesta!=false){
 
-            $respuesta['id_marca'] = isset($marca['marca'])? $marca['marca']: 'Desconocida';
+                $itemMarca = "id";
+                $valorMarca = isset($respuesta['id_marca'])? $respuesta['id_marca']:null;
+                $marca = ControladorProductos::ctrMostrarInfoMarca($itemMarca,$valorMarca);
+
+                $respuesta['id_marca'] = isset($marca['marca'])? $marca['marca']: 'Desconocida';
+
+            }
 
             /* encode: convierte array en string */
             echo json_encode($respuesta);
