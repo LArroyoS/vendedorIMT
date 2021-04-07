@@ -73,7 +73,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!--=======================================================
     MIS ESTILOS
     =========================================================-->
-    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/css/plantilla.css?1.2">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/css/plantilla.css?1.3">
 
 </head>
 
@@ -184,6 +184,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     =========================================================-->
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoproducto.js?1.0"></script>
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoCliente.js?1.0"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoCotizacion.js?1.2"></script>
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/usuarios.js?1.2"></script>
 
 </body>

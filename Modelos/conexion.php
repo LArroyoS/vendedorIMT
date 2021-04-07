@@ -22,6 +22,8 @@
             $script
             );
 
+            $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+
             return $link;
 
         }

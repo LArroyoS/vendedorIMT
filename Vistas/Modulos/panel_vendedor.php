@@ -71,7 +71,21 @@
 
             <div class="card-header">
 
-                <h4>Datos Cliente</h4>
+                <div class="row">
+
+                    <h4 class="col-6">
+                        Datos Cliente
+                    </h4>
+                    <!--
+                    <div class="col-6">
+                        <button id="editar" type="button" class="btn btn-success float-right" style="display:none" disabled>
+                            <i class="fas fa-edit"></i>
+                            Editar datos
+                        </button>
+                    </div>
+                    -->
+
+                </div>
 
             </div>
 
@@ -102,13 +116,13 @@
                 <div class="form-group col-12">
                     <label for="cliente">Cliente</label>
                     <input type="text" class="form-control" name="cliente" id="cliente" placeholder="Nombre Cliente"
-                        minxlength="2" maxlength='40' required>
+                        minxlength="2" maxlength='40' <?php /*required data-readonly oninput="check_text(this);" */ ?> >
                 </div>
 
                 <div class="form-group col-12">
                     <label for="direccion">Dirección</label>
                     <textarea name="direccion" id="direccion" class="form-control" placeholder="Direccicon" rows="2"
-                        minlength="40" maxlength="200" style="resize: none;" required></textarea>
+                        minlength="40" maxlength="200" style="resize: none;" <?php /* required disabled */?> ></textarea>
 
                 </div>
 
@@ -155,13 +169,13 @@
 
                     <div class="form-group col-12">
                         <label for="folio">Folio</label>
-                        <input type="text" class="form-control" id="folio" name="folio" placeholder="folio" value=""
-                            required data-readonly oninput="check_text(this);">
+                        <input type="text" class="form-control" id="folio" placeholder="folio" value=""
+                            readonly <?php /*data-readonly oninput="check_text(this);"*/ ?> >
                     </div>
 
                     <div class="form-group col-12">
                         <label for="fechaVenta">Fecha de Venta </label>
-                        <input type="date" class="form-control" name="fechaVenta" id="fechaVenta" value=""
+                        <input type="date" class="form-control" id="fechaVenta" value=""
                             placeholder="Fecha de Venta" readonly>
                     </div>
 

@@ -19,3 +19,7 @@
 input[data-readonly] {
     pointer-events: none;
 }
+
+input[data-readonly] {
+    background: #dddddd;
+}
