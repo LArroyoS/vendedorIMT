@@ -5,7 +5,7 @@
         public function conectar(){
 
             $host = "localhost";
-            $base = "tiendaimt";
+            $base = "vendedorimt";
             $usuario = "root";
             $clave = "";
             $script = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -21,6 +21,8 @@
             /* Establece que nos traiga escritura latina sin problemas */
             $script
             );
+
+            $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
             return $link;
 

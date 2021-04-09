@@ -1,91 +1,191 @@
 <!DOCTYPE html>
-<html lang=”en”>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
 
 <head>
-    
-    <meta charset=”UTF-8″ />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, 
-    minimum-scale1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vendedor IMT</title>
 
     <?php 
 
-        //session_start();
+        session_start();
 
-        $urlServidor = Ruta:: ctrRutaServidor();
+        $urlVendedor = Ruta::ctrRuta();
+        $urlServidor = Ruta::ctrRutaServidor();
         $icono = ControladorPlantilla::ctrEstiloPlantilla();
+
+        /*=============================================  
+        CONTENIDO DINAMICO
+        ===============================================*/
+        $valor = "";
+
+        if(isset($_GET['ruta'])){
+
+            $rutas = explode("/",$_GET['ruta']);
+
+            $item = "ruta";
+
+            if($rutas[0] == "panel_vendedor" ||
+                $rutas[0] == "consultar_folio" ||
+                $rutas[0] == "salir"){
+
+                $valor = $rutas[0];
+
+            }
+            else{
+
+                $valor = "error";
+
+            }
+
+        }
 
         echo '<link rel="icon" href="'.$urlServidor.$icono['icono'].'">';
 
-        /*============================================
-        MANTENER LA RUTA FIJA DEL PROJECTO
-        ============================================*/
-
-        $url = Ruta::ctrRuta();
-
     ?>
 
-    <meta name="title" content="Tienda IMT">
-    <meta name="description" content="Refaccionaria IMT">
-    <meta name="keywords" content="tortilladoras, masa, mais, refaccionaria">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vendedor IMT</title>
 
-    <!--============================================
-    PLUGINS DE CSS
-    ============================================-->
-    <!--<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>-->
-    <link rel="stylesheet" href="<?php echo $url; ?>Vistas/css/plugins/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo $url; ?>Vistas/css/plugins/fontawesome.css">
-    <link rel="stylesheet" href="<?php echo $url; ?>Vistas/css/plugins/sweetalert.css">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&family=Ubuntu+Condensed&display=swap" rel="stylesheet">
-    <!--============================================
-    ESTILOS PERSONALIZADOS
-    ============================================-->
-    <link rel="stylesheet" href="<?php echo $url; ?>Vistas/css/plantilla.css?1.1">
-    <link rel="stylesheet" href="<?php echo $url; ?>Vistas/css/cabezote.css?1.1">
+    <base href="Vistas/">
 
-    <!--============================================
-    PLUGINS DE JAVASCRIPT
-    ============================================-->
-    <script src="<?php echo $url; ?>Vistas/js/plugins/all.js"></script>
-    <script src="<?php echo $url; ?>Vistas/js/plugins/jquery.min.js"></script>
-    <script src="<?php echo $url; ?>Vistas/js/plugins/popper.js"></script>
-    <script src="<?php echo $url; ?>Vistas/js/plugins/bootstrap.min.js"></script>
-    <!-- https://easings.net -->
-    <script src="<?php echo $url; ?>Vistas/js/plugins/jquery.easing.js"></script>
-    <script src="<?php echo $url; ?>Vistas/js/plugins/jquery.scrollUp.js"></script>
-    <script src="<?php echo $url; ?>Vistas/js/plugins/jquery.flexslider.js"></script>
-    <script src="<?php echo $url; ?>Vistas/js/plugins/sweetalert.min.js"></script>
-    <script>
+    <!--=======================================================
+    CSS
+    =========================================================-->
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?php echo $urlVendedor; ?>Vistas/css/plugins/sweetalert.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="<?php echo $urlVendedor; ?>Vistas/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
-        var rutaActual = location.href;
+    <!--=======================================================
+    JS
+    =========================================================-->
+    <script src="<?php echo $urlVendedor; ?>Vistas/js/plugins/sweetalert.min.js"></script>
 
-    </script>
+    <!--=======================================================
+    MIS ESTILOS
+    =========================================================-->
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/css/plantilla.css?1.3">
 
 </head>
 
-<body> 
+<body class="hold-transition sidebar-mini">
 
-<?php
+    <?php 
 
-/*=============================================  
-CABEZOTE
-===============================================*/
+        if(
+            (isset($_SESSION['validarSesion']) && $_SESSION['validarSesion'] == 'ok')
+        ): 
 
-include "Modulos/cabezote.php";
+            $valor = (($valor!="")? $valor:'inicio');
 
-?>
+    ?>
 
-<input type="hidden" value="<?php echo $url; ?>" id="rutaOculta">
+            <div class="wrapper">
 
-<!--============================================
-JAVASCRIPT PERSONALIZADOS
-============================================-->
-<script src="<?php echo $url; ?>Vistas/js/cabezote.js?1.0"></script>
-<script src="<?php echo $url; ?>Vistas/js/plantilla.js?1.2"></script>
+                <?php include "Modulos/cabezote.php"; ?>
+                <!-- Content Wrapper. Contains page content -->
+                <div class="content-wrapper">
+                    <!-- Content Header (Page header) -->
+                    <div class="content-header">
+                        <div class="container-fluid">
+                            <div class="row mb-2">
+                                <div class="col-sm-6">
+                                    <h1 class="m-0 text-uppercase"><?php echo htmlspecialchars(str_replace("_", " ", $valor)); ?></h1>
+                                </div><!-- /.col -->
+                                <div class="col-sm-6">
+                                    <ol class="breadcrumb float-sm-right text-uppercase">
+                                        <li class="breadcrumb-item">
+                                            <a href="<?php echo htmlspecialchars($urlVendedor); ?>">Inicio</a>
+                                        </li>
+                                        <?php if($valor!='inicio'): ?>
+                                            <li class="breadcrumb-item active">
+                                                <?php echo htmlspecialchars(str_replace("_", " ", $valor)); ?>
+                                            </li>
+                                        <?php endif; ?>
+                                    </ol>
+                                </div><!-- /.col -->
+                            </div><!-- /.row -->
+                        </div><!-- /.container-fluid -->
+                    </div>
+                    <!-- /.content-header -->
 
-</script>
+                    <!-- Main content -->
+                    <div class="content">
+                        <div class="container-fluid">
+
+                            <?php 
+
+                                include 'Modulos/'.$valor.'.php'; 
+
+                            ?>
+
+                        </div><!-- /.container-fluid -->
+                    </div>
+                    <!-- /.content -->
+                </div>
+                <!-- /.content-wrapper -->
+
+                <input type="hidden" value="<?php echo $urlVendedor; ?>" id="rutaOculta">
+
+                <!-- Main Footer -->
+                <footer class="main-footer">
+                    <!-- To the right -->
+                    <div class="float-right d-none d-sm-inline">
+                        Anything you want
+                    </div>
+                    <!-- Default to the left -->
+                    <strong>Copyright &copy; 
+                        <?php echo '2020-'.date('Y'); ?> 
+                        <a href="<?php echo htmlspecialchars($urlVendedor); ?>">Refaccionaria IMT</a>.</strong> Todos los derechos reservados.
+                </footer>
+
+            </div>
+            <!-- ./wrapper -->
+
+    <?php 
+
+        else:
+
+            if($valor==''){
+
+                include 'Modulos/ingresar.php';  
+
+            }
+            else{
+
+                header('Location: '.$urlVendedor); 
+
+            }   
+
+        endif; 
+
+    ?>
+
+    <!-- REQUIRED SCRIPTS -->
+
+    <!-- jQuery -->
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/dist/js/adminlte.min.js"></script>
+
+    <!--=======================================================
+    MIS JS
+    =========================================================-->
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoproducto.js?1.0"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoCliente.js?1.0"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoCotizacion.js?1.2"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/usuarios.js?1.2"></script>
 
 </body>
 
