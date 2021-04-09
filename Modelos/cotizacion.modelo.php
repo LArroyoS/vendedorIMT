@@ -7,24 +7,26 @@
         =====================================================*/
         static public function mdlRegistroCotizacion($tabla,$datos){
 
-            $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(vendedor_id,cliente_id,envio,total)
-            VALUE (:vendedor_id, :cliente_id, :envio, :total)");
+            $pdo = Conexion::conectar();
+
+            $stmt = $pdo->prepare("INSERT INTO $tabla(vendedor_id ,cliente_id,envio,subtotal)
+            VALUE (:vendedor_id, :cliente_id, :envio, :subtotal)");
 
             $stmt->bindParam(":vendedor_id", $datos["vendedor_id"], PDO::PARAM_STR);
             $stmt->bindParam(":cliente_id", $datos["cliente_id"], PDO::PARAM_STR);
             $stmt->bindParam(":envio", $datos["envio"], PDO::PARAM_STR);
-            $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+            $stmt->bindParam(":subtotal", $datos["subtotal"], PDO::PARAM_STR);
 
             try{
 
                 if($stmt->execute()){
 
-                    return $stmt->lastInsertId();
+                    return $pdo->lastInsertId();
 
                 }
                 else{
 
-                    return "error";
+                    return $stmt->errorInfo()[2];
 
                 }
 

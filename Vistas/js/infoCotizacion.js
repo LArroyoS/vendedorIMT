@@ -48,7 +48,56 @@ $('#envio').submit(function(e){
                 //console.log(respuesta);
                 if(respuesta != "false"){
 
-                    console.log(respuesta);
+                    var error = "";
+                    try{
+
+                        respuesta = JSON.parse(respuesta);
+
+                        if(respuesta['id']){
+
+                            $('#folio').val(respuesta['id']);
+                            var d = new Date(respuesta['fecha']);
+                            
+                            var month = d.getMonth()+1;
+                            var day = d.getDate();
+                
+                            var output = d.getFullYear() + '-' +
+                                (month<10 ? '0' : '') + month + '-' +
+                                (day<10 ? '0' : '') + day;
+
+                            $('#fechaVenta').val(output);
+
+                        }
+                        else{;
+
+                            error = respuesta;
+
+                        }
+
+                    }catch(e){
+
+                        error = respuesta;
+
+                    }
+
+                    if(error!=""){
+
+                        //console.log(error);
+                        swal(
+
+                            {
+        
+                                title: "Error",
+                                text: "Lo sentimos, ocurrio un error, intentelo mas tarde",
+                                type: "error",
+                                confirmButtonText: "Cerrar",
+                                closeOnConfirm: true,
+        
+                            },
+        
+                        );
+
+                    }
 
                 }
                 else{

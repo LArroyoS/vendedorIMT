@@ -32,11 +32,11 @@
         /*====================================================
         REGISTRO Actualizar
         ====================================================*/
-        public function ctrActualizarCotizacion($datos){
+        public function ctrActualizarCotizacion($datos,$item){
 
             $tabla = 'cotizacion';
 
-            $respuesta = ModeloCotizacion::mdlActualizarCotizacion($tabla,$datos);
+            $respuesta = ModeloCotizacion::mdlActualizarCotizacion($tabla,$datos,$item);
 
             return $respuesta;
 
@@ -47,9 +47,9 @@
         ====================================================*/
         public function ctrRegistroDetalleCotizacion($datos){
 
-            $tabla = 'cotizacion';
+            $tabla = 'detalle_cotizacion';
 
-            $respuesta = ModeloCotizacion::mdlRegistroCotizacion($tabla,$datos);
+            $respuesta = ModeloCotizacion::mdlRegistroDetalleCotizacion($tabla,$datos);
 
             return $respuesta;
 

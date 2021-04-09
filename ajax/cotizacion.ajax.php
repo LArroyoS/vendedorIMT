@@ -54,17 +54,16 @@
                         "vendedor_id"=>$vendedor['id'],
                         "cliente_id"=>$cliente['id'],
                         "envio"=> '',
-                        "total"=> '',
+                        "subtotal"=> '',
                     );
 
                     $cotizacion = ControladorCotizacion::ctrRegistroCotizacion($datosCotizacion);
-                    echo json_encode($cotizacion);
 
-                    echo json_encode('______________'.$cotizacion);
-                    if($cotizacion!='error'){
+                    if(is_numeric($cotizacion)){
 
                         $subtotal = 0;
                         $itemProducto = 'SKU';
+
                         foreach($this->sku as $key => $sku1){
 
                             $valorProducto = $sku1;
@@ -113,12 +112,17 @@
 
                         }
 
+                        if(!$actualiza){
+
+                            
+
+                        }
+
                         $item = 'id';
                         $valor = $cotizacion;
                         $resultado = '';
                         $resultado = ControladorCotizacion::ctrInfoCotizacion($item,$valor);
-                        echo json_encode('ppppppp');
-                        echo json_encode($resultado);
+
                     }
 
                 }
