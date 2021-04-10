@@ -274,6 +274,7 @@ function VerificarProductos(){
         venta = false;
 
         $("#btnVenta").attr('disabled','');
+        $("#btnPDF").attr('disabled','');
 
         $('#btnBorrar').removeAttr('seleccion');
         $('#btnBorrar span').text('Borrar Productos');
@@ -382,16 +383,6 @@ function CalcularSubtotal(){
     return parseFloat(subtotal).toFixed(2);
 
 }
-
-/*=======================================================
-Verificar productos en COTIZACION
-========================================================*/
-$("#btnImprimir").bind('click',function(e){
-
-    $("#areaPdf").get(0).contentWindow.focus();
-    $("#areaPdf").get(0).contentWindow.print();
-
-});
 
 /*========================================================
 Nueva venta

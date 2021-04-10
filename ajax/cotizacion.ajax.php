@@ -1,6 +1,5 @@
 <?php 
 
-    require_once "../extensiones/fpdf/draw.php";
     require_once "../Controladores/productos.controlador.php";
     require_once "../Modelos/productos.modelo.php";
     require_once "../Controladores/clientes.controlador.php";
@@ -18,6 +17,7 @@
         public $telefono;
         public $cantidad;
         public $sku;
+        private $envio = 40;
 
         public function generarCotizacion(){
 
@@ -69,9 +69,10 @@
                             $valorProducto = $sku1;
                             $producto = ControladorProductos::ctrMostrarInfoProducto($itemProducto,$valorProducto);
                             $precio = (($producto['descuentoOferta']>0)? $producto['precioOferta']:$producto['precio']);
-                            $importe =  $this->cantidad[$key]*$precio;
+                            $importe = $this->cantidad[$key]*$precio;
 
                             $datosDetalleCotizacion = array(
+                                "id" => ($key+1),
                                 "cotizacion_id"=>$cotizacion,
                                 "producto_id"=>$producto['id'],
                                 "cantidad"=> $this->cantidad[$key],
@@ -85,13 +86,6 @@
 
                         }
 
-                        $envio = 0;
-                        if($subtotal<500){
-
-                            $envio = 40;
-
-                        }
-
                         $datosActualizaCotizacion = array(
                             'id' => $cotizacion,
                             "valor"=> $subtotal,
@@ -100,11 +94,11 @@
                         $itemActualizaCotizacion = 'subtotal';
                         $actualiza = ControladorCotizacion::ctrActualizarCotizacion($datosActualizaCotizacion,$itemActualizaCotizacion);
 
-                        if($envio>0){
+                        if($subtotal<500){
 
                             $datosActualizaCotizacion = array(
                                 'id' => $cotizacion,
-                                "envio"=> $envio,
+                                "valor"=> $this->envio,
                             );
 
                             $itemActualizaCotizacion = 'envio';
@@ -112,15 +106,8 @@
 
                         }
 
-                        if(!$actualiza){
-
-                            
-
-                        }
-
                         $item = 'id';
                         $valor = $cotizacion;
-                        $resultado = '';
                         $resultado = ControladorCotizacion::ctrInfoCotizacion($item,$valor);
 
                     }
@@ -135,11 +122,7 @@
 
     }
 
-    if(isset($_POST["folio"])){
-
-
-    }
-    else if(isset($_POST['SKU'])){
+    if(isset($_POST['SKU'])){
 
         $cotizacion = new CotizacionPDF();
         $cotizacion->vendedor = $_POST['vendedor'];

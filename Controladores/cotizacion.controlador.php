@@ -55,4 +55,17 @@
 
         }
 
+        /*====================================================
+        REGISTRO lista detalle_cotizacion
+        ====================================================*/
+        public function ctrListarDetalleCotizacion($ordenar,$item,$valor){
+
+            $tabla = 'detalle_cotizacion';
+
+            $respuesta = ModeloCotizacion::mdlListarDetalleCotizacion($tabla,$ordenar,$item,$valor);
+
+            return $respuesta;
+
+        }
+
     }

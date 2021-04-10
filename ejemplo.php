@@ -74,8 +74,19 @@
 
     }
 
+    /*
     $datos = array('nombre' => 'nom','apellido' => 'ape');
     $tabla = 'prueba';
 
     echo Ejemplo::mdlRegistroEjemplo($tabla,$datos);
+    */
+
+?>
+
+<form method="POST" action="./ajax/cotizacionFlayer.ajax.php">
+
+    <input id="imprimir" name="imprimir">
+    <button type="submit">Descargar</button>
+
+</form>
 

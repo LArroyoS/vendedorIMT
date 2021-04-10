@@ -23,6 +23,8 @@
 
             if($respuesta!=false){
 
+                $respuesta['precio'] = (($respuesta['descuentoOferta']>0)? $respuesta['precioOferta']:$respuesta['precio']);
+
                 $itemMarca = "id";
                 $valorMarca = isset($respuesta['id_marca'])? $respuesta['id_marca']:null;
                 $marca = ControladorProductos::ctrMostrarInfoMarca($itemMarca,$valorMarca);

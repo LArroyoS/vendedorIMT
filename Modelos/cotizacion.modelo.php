@@ -9,8 +9,8 @@
 
             $pdo = Conexion::conectar();
 
-            $stmt = $pdo->prepare("INSERT INTO $tabla(vendedor_id ,cliente_id,envio,subtotal)
-            VALUE (:vendedor_id, :cliente_id, :envio, :subtotal)");
+            $stmt = $pdo->prepare("INSERT INTO $tabla(id, vendedor_id ,cliente_id,envio,subtotal)
+            VALUE (1, :vendedor_id, :cliente_id, :envio, :subtotal)");
 
             $stmt->bindParam(":vendedor_id", $datos["vendedor_id"], PDO::PARAM_STR);
             $stmt->bindParam(":cliente_id", $datos["cliente_id"], PDO::PARAM_STR);
@@ -116,9 +116,10 @@
         =====================================================*/
         static public function mdlRegistroDetalleCotizacion($tabla,$datos){
 
-            $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(cotizacion_id,producto_id,cantidad,precio_unitario,descuentoOferta,precioDescuento)
-            VALUE (:cotizacion_id, :producto_id, :cantidad, :precio_unitario, :descuentoOferta, :precioDescuento)");
+            $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id, cotizacion_id,producto_id,cantidad,precio_unitario,descuentoOferta,precioDescuento)
+            VALUE (:id, :cotizacion_id, :producto_id, :cantidad, :precio_unitario, :descuentoOferta, :precioDescuento)");
 
+            $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
             $stmt->bindParam(":cotizacion_id", $datos["cotizacion_id"], PDO::PARAM_STR);
             $stmt->bindParam(":producto_id", $datos["producto_id"], PDO::PARAM_STR);
             $stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
@@ -147,6 +148,44 @@
             }
 
             $stmt->close();
+            $stmt = null;
+
+        }
+
+        /*=========================================
+        LISTAR DETALLES COTIZACION
+        ==========================================*/
+        static public function mdlListarDetalleCotizacion($tabla,$ordenar,$item,$valor){
+
+            if($item != null){
+
+                $stmt = Conexion::conectar()
+                ->prepare("SELECT * FROM $tabla WHERE $item = :$item 
+                ORDER BY $ordenar ASC");
+
+                $stmt -> bindParam(":".$item,$valor, PDO::PARAM_STR);
+
+                if($stmt->execute()){
+
+                    return $stmt->fetchAll();
+
+                }
+                else{
+
+                    return $stmt->errorInfo()[2];
+
+                }
+
+            }
+            else{
+
+                return false;
+
+            }
+
+            $stmt->close();
+
+            /* Anular objeto */
             $stmt = null;
 
         }
