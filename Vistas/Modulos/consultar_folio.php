@@ -1,5 +1,17 @@
 <form id="envio" class="row" autocomplete="off">
 
+    <div class="col-12 row no-print pb-3">
+
+        <div class="col-12">
+            <button id="btnNV" type="reset" class="btn btn-primary btn-block">
+                <i class="fas fa-redo"></i>
+                <span>Limpiar Cotización</span>
+            </button>
+
+        </div>
+
+    </div>
+
     <div class="col-md-8">
         <div class="card border border-dark">
 
@@ -9,12 +21,10 @@
                     <thead>
 
                         <tr>
-                            <th style="width: 10px"></th>
-                            <th width="130">Cantidad</th>
-                            <th width="150">SKU</th>
+                            <th>SKU</th>
                             <th>Producto</th>
-                            <th>Marca</th>
                             <th>Precio</th>
+                            <th>Cantidad</th>
                             <th>Importe</th>
                         </tr>
                     </thead>
@@ -69,14 +79,10 @@
         <!-- this row will not appear when printing -->
         <div class="row no-print pb-3">
             <div class="col-12">
-                <button id="btnVenta" type="submit" class="btn btn-success float-right mx-2" style="margin-right: 5px;"
-                    disabled>
+                <button id="btnPDF" type="button" class="btn btn-outline-dark float-right mx-2"
+                    style="margin-right: 5px;" disabled>
                     <i class="fas fa-money-check-alt"></i>
-                    <span>Generar PDF</span>
-                </button>
-                <button id="btnBorrar" type="button" class="btn btn-danger float-right mx-2">
-                    <i class="fas fa-trash-alt"></i>
-                    <span>Limpiar Cotizacion</span>
+                    <span>Ver PDF</span>
                 </button>
             </div>
         </div>
@@ -89,16 +95,34 @@
         <div class="card card-widget widget-user shadow border border-success">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="card-header bg-success">
-                <h1 class="text-center">Total: $<span id="TotalCoste"></span> </h1>
+                <h1 class="text-center">Total: $0.00<span id="TotalCoste"></span> </h1>
             </div>
             <div class="card-footer p-3 bg-gris">
 
                 <div class="row">
 
                     <div class="form-group col-12">
+
                         <label for="folio">Folio</label>
-                        <input type="text" class="form-control" id="folio" name="folio" placeholder="folio" value=""
-                            required>
+                        <!-- SEARCH TELEFONO -->
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="folio" id="folio" placeholder="folio"
+                            list="sugerenciasFolios">
+                            <!--=========================================================================
+                            SUGERENCIA
+                            ===========================================================================-->
+                            <datalist id="sugerenciasFolios">
+
+
+                            </datalist>
+
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-info border border-dark" id="btnBuscarFolio">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="form-group col-12">
@@ -171,7 +195,6 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button id="btnImprimir" type="button" class="btn btn-info">Imprimir</button>
             </div>
 
         </div>

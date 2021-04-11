@@ -17,7 +17,64 @@
         public $telefono;
         public $cantidad;
         public $sku;
+        public $folio;
         private $envio = 40;
+
+        public function consultarCotizacion(){
+
+            $resultao = "error";
+            
+            if($this->folio!=""){
+
+                $item = 'id';
+                $valor = $this->folio;
+                $cotizacion = ControladorCotizacion::ctrInfoCotizacion($item,$valor);
+
+                if($cotizacion){
+
+                    $itemVendedor = 'id';
+                    $valorVendedor = $cotizacion['vendedor_id'];
+                    $vendedor = ControladorUsuarios::ctrMostrarUsuario($itemVendedor,$valorVendedor);
+
+                    $ordenarDC = "id";
+                    $itemDC = 'cotizacion_id';
+                    $valorDC = $this->folio;
+                    $detallesCotizacion = ControladorCotizacion::ctrListarDetalleCotizacion($ordenarDC,$itemDC,$valorDC);
+
+                    if($vendedor && $detallesCotizacion){
+
+                        $cotizacion['id_vendedor'] = $vendedor['nombre'];
+                        $detalle = array();
+                        foreach($detallesCotizacion as $key => $productos){
+
+                            $itemProducto = "id";
+                            $valorProducto = $productos['producto_id'];
+                            $producto = ControladorProductos::ctrMostrarInfoProducto($itemProducto,$valorProducto);
+
+                            $itemMarca = "id";
+                            $valorMarca = isset($producto['id_marca'])? $producto['id_marca']:null;
+                            $marca = ControladorProductos::ctrMostrarInfoMarca($itemMarca,$valorMarca);
+
+                            $productos['producto_id'] = isset($producto['SKU'])? $producto['SKU']: 'Desconocido';
+                            $productos['producto_nombre'] = $producto['titulo'];
+                            $productos['id_marca'] = isset($marca['marca'])? $marca['marca']: 'Desconocida';
+
+                            $detalle[] = $productos;
+
+                        }
+
+                        $cotizacion['detalle'] = $detalle;
+                        $resultado = $cotizacion;
+
+                    }
+
+                }
+
+            }
+
+            echo json_encode($resultado);
+
+        }
 
         public function generarCotizacion(){
 
@@ -44,22 +101,23 @@
                     );
 
                     $nuevoCliente = ControladorClientes::ctrInsertarCliente($datosCliente);
-                    $cliente = ControladorClientes::ctrMostrarInfoCliente($itemCliente,$valorCliente);
 
                 }
 
-                if(isset($vendedor['id']) && isset($cliente['id'])){
+                if(isset($vendedor['id'])){
 
                     $datosCotizacion = array(
                         "vendedor_id"=>$vendedor['id'],
-                        "cliente_id"=>$cliente['id'],
+                        "nombre_cliente"=>$this->cliente,
+                        "direccion_cliente"=>$this->direccion,
+                        "telefono"=>$this->telefono,
                         "envio"=> '',
                         "subtotal"=> '',
                     );
 
                     $cotizacion = ControladorCotizacion::ctrRegistroCotizacion($datosCotizacion);
 
-                    if(is_numeric($cotizacion)){
+                    if($cotizacion && is_numeric($cotizacion)){
 
                         $subtotal = 0;
                         $itemProducto = 'SKU';
@@ -122,7 +180,7 @@
 
     }
 
-    if(isset($_POST['SKU'])){
+    if(isset($_POST['tel']) && isset($_POST['SKU'])){
 
         $cotizacion = new CotizacionPDF();
         $cotizacion->vendedor = $_POST['vendedor'];
@@ -132,5 +190,12 @@
         $cotizacion->cantidad = isset($_POST['cantidad'])? explode(',',$_POST['cantidad']): null;
         $cotizacion->sku = isset($_POST['SKU'])? explode(',',$_POST['SKU']): null;
         $cotizacion->generarCotizacion();
+
+    }
+    else if(isset($_POST['folio'])){
+
+        $cotizacion = new CotizacionPDF();
+        $cotizacion->folio = $_POST['folio'];
+        $cotizacion->consultarCotizacion();
 
     }

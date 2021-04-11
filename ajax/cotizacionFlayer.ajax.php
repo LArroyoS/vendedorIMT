@@ -47,15 +47,11 @@
                     $valorVendedor = $cotizacion['vendedor_id'];
                     $vendedor = ControladorUsuarios::ctrMostrarUsuario($itemVendedor,$valorVendedor);
 
-                    $itemCliente = 'id';
-                    $valorCliente = $cotizacion['cliente_id'];
-                    $cliente = ControladorClientes::ctrMostrarInfoCliente($itemCliente,$valorCliente);
+                    if($detallesCotizacion && $vendedor){
 
-                    if($detallesCotizacion && $cliente && $vendedor){
+                        $fpdf = $this->generarCotizacion($cotizacion,$detallesCotizacion,$vendedor);
 
-                        $fpdf = $this->generarCotizacion($cotizacion,$detallesCotizacion,$cliente,$vendedor);
-
-                        $pdf = $fpdf->OutPut('S','cotizacion-'.$cliente['nombre'].'_'.$this->folio.".php");
+                        $pdf = $fpdf->OutPut('S','cotizacion-'.$cotizacion['nombre_cliente'].'_'.$this->folio.".php");
                         $pdf = base64_encode($pdf);
 
                     }
@@ -90,15 +86,11 @@
                     $valorVendedor = $cotizacion['vendedor_id'];
                     $vendedor = ControladorUsuarios::ctrMostrarUsuario($itemVendedor,$valorVendedor);
 
-                    $itemCliente = 'id';
-                    $valorCliente = $cotizacion['cliente_id'];
-                    $cliente = ControladorClientes::ctrMostrarInfoCliente($itemCliente,$valorCliente);
+                    if($detallesCotizacion && $vendedor){
 
-                    if($detallesCotizacion && $cliente && $vendedor){
+                        $fpdf = $this->generarCotizacion($cotizacion,$detallesCotizacion,$vendedor);
 
-                        $fpdf = $this->generarCotizacion($cotizacion,$detallesCotizacion,$cliente,$vendedor);
-
-                        $fpdf->OutPut('D','cotizacion-'.$cliente['nombre'].'_'.$this->folio.".php");
+                        $fpdf->OutPut('D','cotizacion-'.$cotizacion['nombre_cliente'].'_'.$this->folio.".php");
                         $pdf = 'ok';
 
                     }
@@ -112,7 +104,7 @@
 
         }
 
-        public function generarCotizacion($cotizacion,$detallesCotizacion,$cliente,$vendedor){
+        public function generarCotizacion($cotizacion,$detallesCotizacion,$vendedor){
 
             $alto = 6;
             $tamLetra = 10;
@@ -173,13 +165,13 @@
             $fpdf->Ln();
             $fpdf->SetWidths(array(55,140));
             $fpdf->Row(array(utf8_decode("NOMBRE DEL CLIENTE:"),
-                    utf8_decode($cliente['nombre'])
+                    utf8_decode($cotizacion['nombre_cliente'])
                 ));
             $fpdf->Row(array(utf8_decode("DIRECCIÓN: "),
-                    utf8_decode($cliente['direccion'])
+                    utf8_decode($cotizacion['direccion_cliente'])
                 ));
 
-            $telefono = $this->comoTelefono($cliente['telefono']);
+            $telefono = $this->comoTelefono($cotizacion['telefono']);
 
             $fpdf->Row(array(utf8_decode("TELÉFNO: "),
                     utf8_decode($telefono)

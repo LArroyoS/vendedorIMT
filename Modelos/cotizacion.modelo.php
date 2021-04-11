@@ -9,11 +9,14 @@
 
             $pdo = Conexion::conectar();
 
-            $stmt = $pdo->prepare("INSERT INTO $tabla(id, vendedor_id ,cliente_id,envio,subtotal)
-            VALUE (1, :vendedor_id, :cliente_id, :envio, :subtotal)");
+            $stmt = $pdo->prepare("INSERT INTO $tabla(vendedor_id,nombre_cliente,direccion_cliente,telefono,envio,subtotal)
+            VALUE (:vendedor_id,:nombre_cliente, :direccion_cliente, :telefono, :envio, :subtotal)");
 
             $stmt->bindParam(":vendedor_id", $datos["vendedor_id"], PDO::PARAM_STR);
-            $stmt->bindParam(":cliente_id", $datos["cliente_id"], PDO::PARAM_STR);
+            $stmt->bindParam(":nombre_cliente", $datos["nombre_cliente"], PDO::PARAM_STR);
+            $stmt->bindParam(":direccion_cliente", $datos["direccion_cliente"], PDO::PARAM_STR);
+            $stmt->bindParam(":telefono", $datos["telefono"], PDO::PARAM_STR);
+            
             $stmt->bindParam(":envio", $datos["envio"], PDO::PARAM_STR);
             $stmt->bindParam(":subtotal", $datos["subtotal"], PDO::PARAM_STR);
 
