@@ -1,7 +1,8 @@
 /*=============================================================
 CAPTURA DE RUTA
 =============================================================*/
-var rutaActual = location.href;
+/*var rutaActual = location.href;*/
+var rutaActual = $('#rutaOculta').val();
 $("#Ingresar").submit('form',function(){
 
     localStorage.setItem("rutaActual",rutaActual);

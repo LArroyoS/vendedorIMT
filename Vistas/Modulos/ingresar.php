@@ -1,5 +1,8 @@
 <?php 
 
+    $urlVendedor = Ruta::ctrRuta();
+    $urlServidor = Ruta::ctrRutaServidor();
+
     $ingreso = new ControladorUsuarios();
     $ingreso->ctrIngresoUsuario();
 
@@ -55,17 +58,6 @@
 
                     </div>
                     <div class="row">
-                        <!--
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Recuerdame
-                                </label>
-                            </div>
-                        </div>
-                        -->
-
                         <!-- /.col -->
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
@@ -75,7 +67,7 @@
                 </form>
 
                 <p class="mb-1">
-                    <a href="l">¿Olvidaste tu contraseña?</a>
+                    <a href="<?php echo htmlspecialchars($urlVendedor); ?>cambiar_clave">¿Olvidaste tu contraseña?</a>
                 </p>
 
             </div>

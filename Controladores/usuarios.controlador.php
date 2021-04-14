@@ -326,6 +326,7 @@
         ====================================================*/
         public function ctrOlvidoPassword(){
 
+            
             if(isset($_POST["passEmail"])){
 
                 if(preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["passEmail"])){
@@ -387,8 +388,6 @@
                             $urlBoton = $url;
                             $textoBoton = "Ingrese nuevamente al sitio";
                             $pie = "Si no realizo esta accion, favor de comunicarse con nosotros";
-
-                            echo $urlBoton;
 
                             $mail->msgHTML(
 

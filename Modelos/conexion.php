@@ -8,21 +8,33 @@
             $base = "vendedorimt";
             $usuario = "root";
             $clave = "";
-            $script = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
+            $script = array( 
+                PDO::ATTR_PERSISTENT => true, 
+                PDO::ATTR_EMULATE_PREPARES => false, 
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, 
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'");
 
-            $link = new PDO(
-            /* host               nombre base de datos  */
-            "mysql:host=$host;dbname=$base;",
-            /* usuario */
-            "root",
-            /* contaseña */
-            "",
-            /* Establece que nos traiga escritura latina sin problemas */
-            $script
-            );
+            try{
 
-            $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+                $link = new PDO(
+                    /* host               nombre base de datos  */
+                    "mysql:host=$host;dbname=$base;",
+                    /* usuario */
+                    "root",
+                    /* contaseña */
+                    "",
+                    /* Establece que nos traiga escritura latina sin problemas */
+                    $script
+                );
+
+                $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            }
+            catch(PDOException $e){
+
+                $link = false;
+
+            }
 
             return $link;
 

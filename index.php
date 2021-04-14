@@ -4,6 +4,7 @@
     LIBRERIAS
     ========================================*/
     require_once "extensiones/fpdf/draw.php";
+    require_once "extensiones/PHPMailer/PHPMailerAutoload.php";
 
     /*====================================================
     PLANTILLA

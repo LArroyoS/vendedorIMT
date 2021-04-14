@@ -3,7 +3,7 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -28,7 +28,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             if($rutas[0] == "panel_vendedor" ||
                 $rutas[0] == "consultar_folio" ||
-                $rutas[0] == "salir"){
+                $rutas[0] == "salir" ||
+                $rutas[0] == 'ingresar' ||
+                $rutas[0] == 'cambiar_clave'){
 
                 $valor = $rutas[0];
 
@@ -79,12 +81,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-mini">
 
+    <input type="hidden" value="<?php echo $urlVendedor; ?>" id="rutaOculta">
+
     <?php 
 
         if(
             (isset($_SESSION['validarSesion']) && $_SESSION['validarSesion'] == 'ok')
         ): 
 
+            $valor = ($valor=='ingresar' || $valor=='cambiar_clave')? 'error':$valor;
             $valor = (($valor!="")? $valor:'inicio');
 
     ?>
@@ -134,8 +139,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
                 <!-- /.content-wrapper -->
 
-                <input type="hidden" value="<?php echo $urlVendedor; ?>" id="rutaOculta">
-
                 <!-- Main Footer -->
                 <footer class="main-footer">
                     <!-- To the right -->
@@ -155,14 +158,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         else:
 
-            if($valor==''){
+            if($valor=='ingresar'){
 
                 include 'Modulos/ingresar.php';  
 
             }
+            else if($valor=='cambiar_clave'){
+
+                include 'Modulos/cambiar_clave.php';  
+
+            }
             else{
 
-                header('Location: '.$urlVendedor); 
+                header('Location: '.$urlVendedor.'ingresar'); 
 
             }   
 
@@ -185,7 +193,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoproducto.js?1.0"></script>
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoCliente.js?1.0"></script>
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoCotizacion.js?1.3"></script>
-    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/usuarios.js?1.2"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/usuarios.js?1.3"></script>
 
 </body>
 
