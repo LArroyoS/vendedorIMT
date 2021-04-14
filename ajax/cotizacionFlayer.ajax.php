@@ -203,7 +203,7 @@
             foreach($detallesCotizacion as $key => $detalle){
 
                 $item = 'id';
-                $valor = $detalle['id'];
+                $valor = $detalle['producto_id'];
                 $producto = ControladorProductos::ctrMostrarInfoProducto($item,$valor);
 
                 $itemMarca = "id";
@@ -227,9 +227,9 @@
             /*================================================================================
             tabla 4 Costos (subtotal, envio y total)
             =================================================================================*/
-            $fpdf->SetFont($tipoLetra,'B',$tamLetra-1);
+            $fpdf->SetFont($tipoLetra,'B',$tamLetra+5);
             $fpdf->Cell(62,6,utf8_decode("FORMAS DE PAGO"),0,0,'L',false);
-            $fpdf->SetFont($tipoLetra,'B',$tamLetra-2);
+            $fpdf->SetFont($tipoLetra,'B',$tamLetra);
             $fpdf->Cell(63,$alto,utf8_decode("PESOS MXN."),0,0,'C',false);
             $fpdf->SetFont($tipoLetra,'B',$tamLetra);
             $fpdf->Cell(35,$alto,utf8_decode("SUBTOTAL:"),1,0,'',false);
@@ -237,19 +237,19 @@
             $fpdf->Cell(35,$alto,utf8_decode($this->comoMoneda($cotizacion['subtotal'])),1,0,'R',false);
             $fpdf->Ln();
 
-            $fpdf->SetFont($tipoLetra,'B',$tamLetra-1);
-            $fpdf->Cell(40,$alto,"BANCOMER: ",0,0,'L',false);
-            $fpdf->SetFont($tipoLetra,'',$tamLetra-1);
-            $fpdf->Cell(85,$alto,"0113993450",0,0,'L',false);
+            $fpdf->SetFont($tipoLetra,'B',$tamLetra+4);
+            $fpdf->Cell(70,$alto,"BANCOMER: ",0,0,'L',false);
+            $fpdf->SetFont($tipoLetra,'B',$tamLetra+3);
+            $fpdf->Cell(55,$alto,"0113993450",0,0,'L',false);
             $fpdf->SetFont($tipoLetra,'B',$tamLetra);
             $fpdf->Cell(35,$alto,utf8_decode("ENVIO:"),1,0,'',false);
             $fpdf->SetFont($tipoLetra,'',$tamLetra);
             $fpdf->Cell(35,$alto,utf8_decode($this->comoMoneda($cotizacion['envio'])),1,0,'R',false);
             $fpdf->Ln();
-            $fpdf->SetFont($tipoLetra,'B',$tamLetra-1);
-            $fpdf->Cell(40,$alto,"CLAVE INTERBANCARIA: ",0,0,'L',false);
-            $fpdf->SetFont($tipoLetra,'',$tamLetra-1);
-            $fpdf->Cell(85,$alto,"012180001139934501",0,0,'L',false);
+            $fpdf->SetFont($tipoLetra,'B',$tamLetra+4);
+            $fpdf->Cell(70,$alto,"CLAVE INTERBANCARIA: ",0,0,'L',false);
+            $fpdf->SetFont($tipoLetra,'B',$tamLetra+3);
+            $fpdf->Cell(55,$alto,"012180001139934501",0,0,'L',false);
             $fpdf->SetFont($tipoLetra,'B',$tamLetra);
             $fpdf->Cell(35,$alto,utf8_decode("TOTAL:"),1,0,'',false);
             $fpdf->SetFont($tipoLetra,'',$tamLetra);

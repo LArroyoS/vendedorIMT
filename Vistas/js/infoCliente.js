@@ -29,12 +29,6 @@ $("#btnBuscarTel").on('click',function(e){
                 respuesta = JSON.parse(respuesta);
                 $('#cliente').val(respuesta['nombre']);
                 $('#direccion').val(respuesta['direccion']);
-                /*
-                $("#cliente").attr('data-readonly','');
-                $("#editar").removeAttr('disabled','');
-                $("#direccion").removeAttr('disabled','');
-                $("#direccion").removeAttr('disabled','');
-                */
 
             }
             else{

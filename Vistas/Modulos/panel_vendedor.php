@@ -1,8 +1,23 @@
+<?php 
+
+    $urlVendedor = Ruta::ctrRuta();
+    $urlServidor = Ruta::ctrRutaServidor();
+
+?>
+
 <form id="envio" class="row" autocomplete="off">
 
     <div class="col-12 row no-print pb-3">
 
-        <div class="col-12">
+        <div class="col-6">
+            <button data-toggle="modal" data-target="#flayerPDF" id="flayer" type="button" class="btn btn-dark btn-block">
+                <i class="fas fa-book"></i>
+                <span>Ver Flayer</span>
+            </button>
+
+        </div>
+
+        <div class="col-6">
             <button id="btnNV" type="reset" class="btn btn-primary btn-block">
                 <i class="fas fa-plus-circle"></i>
                 <span>Nueva Venta</span>
@@ -241,6 +256,43 @@
                 <object id="areaPdf" name="areaPdf" width="100%" height="100%" data="" type="application/pdf">
 
                     <embed width="100%" height="100%" src="" type="application/pdf"></embed>
+
+                </object>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <!--
+                <button id="btnImprimir" type="button" class="btn btn-info">Imprimir</button>
+                -->
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal modal-tall fade" id="flayerPDF" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-xl">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Flayer <span></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <object id="areaFlayer" name="areaFlayer" width="100%" height="100%" data="<?php echo $urlServidor; ?>Vistas\flayers\Flayer2021Abril.pdf" type="application/pdf">
+
+                    <embed width="100%" height="100%" src="<?php echo $urlServidor; ?>Vistas\flayers\Flayer2021Abril.pdf" type="application/pdf"></embed>
 
                 </object>
 

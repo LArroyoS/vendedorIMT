@@ -79,6 +79,11 @@
         <!-- this row will not appear when printing -->
         <div class="row no-print pb-3">
             <div class="col-12">
+                <button id="btnCompra" type="button" class="btn btn-success float-right mx-2"
+                    style="margin-right: 5px;" disabled>
+                    <i class="fas fa-check"></i>
+                    <span>Confirmar Compra</span>
+                </button>
                 <button id="btnPDF" type="button" class="btn btn-outline-dark float-right mx-2"
                     style="margin-right: 5px;" disabled>
                     <i class="fas fa-money-check-alt"></i>
@@ -95,7 +100,7 @@
         <div class="card card-widget widget-user shadow border border-success">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="card-header bg-success">
-                <h1 class="text-center">Total: $0.00<span id="TotalCoste"></span> </h1>
+                <h1 class="text-center">Total: $<span id="TotalCoste">0.00</span> </h1>
             </div>
             <div class="card-footer p-3 bg-gris">
 
@@ -133,8 +138,14 @@
 
                     <div class="form-group col-12">
                         <label for="vendedor">Vendedor</label>
-                        <input type="text" class="form-control" name="vendedor" id="vendedor" value="Vendedor1"
-                            placeholder="Venderor" readonly>
+                        <input type="text" class="form-control" name="vendedor" id="vendedor"
+                            placeholder="Vendedor" readonly>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <label for="estado">Estado</label>
+                        <input type="text" class="form-control" name="estado" id="estado"
+                            placeholder="Estado" readonly>
                     </div>
 
                 </div>

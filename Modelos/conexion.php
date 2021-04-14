@@ -28,4 +28,22 @@
 
         }
 
+        public function iniciarTransaccion($link){
+
+            $link->beginTransaction();
+
+        }
+
+        public function commit($link){
+
+            $link->commit();
+
+        }
+
+        public function rollBack($link){
+
+            $link->rollBack();
+
+        }
+
     }

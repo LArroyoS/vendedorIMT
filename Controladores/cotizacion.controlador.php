@@ -68,4 +68,17 @@
 
         }
 
+        /*=========================================
+        SUGERENCIA FOLIOS
+        ==========================================*/
+        static public function ctrSugerenciaFolios($valor){
+
+            $tabla = "cotizacion";
+
+            $respuesta = ModeloCotizacion::mdlSugerenciaFolios($tabla,$valor);
+
+            return $respuesta;
+
+        }
+
     }

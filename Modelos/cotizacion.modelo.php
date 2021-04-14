@@ -5,9 +5,9 @@
         /*=====================================================
         RESGISTRO DE Cotizacion
         =====================================================*/
-        static public function mdlRegistroCotizacion($tabla,$datos){
+        static public function mdlRegistroCotizacion($tabla,$datos,&$conexion=null){
 
-            $pdo = Conexion::conectar();
+            $pdo = ($conexion!=null)? $conexion : Conexion::conectar();
 
             $stmt = $pdo->prepare("INSERT INTO $tabla(vendedor_id,nombre_cliente,direccion_cliente,telefono,envio,subtotal)
             VALUE (:vendedor_id,:nombre_cliente, :direccion_cliente, :telefono, :envio, :subtotal)");
@@ -48,10 +48,10 @@
         /*=========================================
         ACTUALIZAR Cotizacion
         ==========================================*/
-        static public function mdlActualizarCotizacion($tabla,$datos,$item){
+        static public function mdlActualizarCotizacion($tabla,$datos,$item,&$conexion=null){
 
-            $stmt = Conexion::conectar()
-            ->prepare("UPDATE $tabla 
+            $pdo = ($conexion!=null)? $conexion : Conexion::conectar();
+            $stmt = $pdo->prepare("UPDATE $tabla 
                 SET $item = :$item 
                 WHERE id = :id");
 
@@ -60,12 +60,12 @@
 
             if($stmt->execute()){
 
-                return "ok";
+                return true;
 
             }
             else{
 
-                return "error";
+                return false;
 
             }
 
@@ -79,10 +79,10 @@
         /*=========================================
         MOSTRAR INFO Cotizacion
         ==========================================*/
-        static public function mdlInfoCotizacion($tabla, $item, $valor){
+        static public function mdlInfoCotizacion($tabla, $item, $valor,&$conexion=null){
 
-            $stmt = Conexion::conectar()
-            ->prepare("SELECT * FROM $tabla WHERE $item = :$item LIMIT 1");
+            $pdo = ($conexion!=null)? $conexion : Conexion::conectar();
+            $stmt = $pdo->prepare("SELECT * FROM $tabla WHERE $item = :$item LIMIT 1");
 
             $stmt -> bindParam(":".$item,$valor, PDO::PARAM_STR);
 
@@ -117,12 +117,12 @@
         /*=====================================================
         RESGISTRO DE detalle_Cotizacion
         =====================================================*/
-        static public function mdlRegistroDetalleCotizacion($tabla,$datos){
+        static public function mdlRegistroDetalleCotizacion($tabla,$datos,&$conexion=null){
 
-            $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id, cotizacion_id,producto_id,cantidad,precio_unitario,descuentoOferta,precioDescuento)
-            VALUE (:id, :cotizacion_id, :producto_id, :cantidad, :precio_unitario, :descuentoOferta, :precioDescuento)");
+            $pdo = ($conexion!=null)? $conexion : Conexion::conectar();
+            $stmt = $pdo->prepare("INSERT INTO $tabla(id,cotizacion_id,producto_id,cantidad,precio_unitario,descuentoOferta,precioDescuento)
+            VALUE (:id,:cotizacion_id, :producto_id, :cantidad, :precio_unitario, :descuentoOferta, :precioDescuento)");
 
-            $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
             $stmt->bindParam(":cotizacion_id", $datos["cotizacion_id"], PDO::PARAM_STR);
             $stmt->bindParam(":producto_id", $datos["producto_id"], PDO::PARAM_STR);
             $stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
@@ -190,6 +190,54 @@
 
             /* Anular objeto */
             $stmt = null;
+
+        }
+
+        /*=========================================
+        SUGERENCIA FOLIO
+        ==========================================*/
+        static public function mdlSugerenciaFolios($tabla,$valor){
+
+            if($valor!=null || $valor!=""){
+
+                $stmt = Conexion::conectar()
+                ->prepare("SELECT id,nombre_cliente,telefono FROM $tabla 
+                WHERE 
+                (id!=null OR id!='') AND
+                (id like '$valor%')
+                ORDER BY id ASC LIMIT 10");
+
+                try{
+
+                    if($stmt->execute()){
+
+                        return $stmt->fetchAll();
+
+                    }
+                    else{
+
+                        return false;
+
+                    }
+
+                }
+                catch(Exception $e){
+
+                    return false;
+
+                }
+
+                $stmt->close();
+
+                /* Anular objeto */
+                $stmt = null;
+
+            }
+            else{
+
+                return false;
+
+            }
 
         }
 

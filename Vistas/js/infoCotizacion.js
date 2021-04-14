@@ -48,8 +48,8 @@ $('#envio').submit(function(e){
             processData: false,
             success: function(respuesta){
 
-                console.log(respuesta);
-                if(respuesta != "false"){
+                //console.log(respuesta);
+                if(respuesta != "error"){
 
                     var error = "";
                     try{
@@ -86,7 +86,7 @@ $('#envio').submit(function(e){
 
                     if(error!=""){
 
-                        console.log(error);
+                        //console.log(error);
                         $('#btnVenta').removeAttr('disabled');
                         $('#btnBorrar').removeAttr('disabled','');
                         swal(
@@ -193,6 +193,8 @@ $('#btnBuscarFolio').click(function(e){
                             var elementoEnvio = costes.eq(1);
                             var elementoTotal = costes.eq(2);
 
+                            var estado = 'SIN PAGAR';
+
                             $('#folio').val(respuesta['id']);
                             var d = new Date(respuesta['fecha']);
                             
@@ -218,7 +220,21 @@ $('#btnBuscarFolio').click(function(e){
                             $('#cliente').val(respuesta['nombre_cliente']);
                             $('#direccion').val(respuesta['direccion_cliente']);
                             $('#tel').val(respuesta['telefono']);
-                            $('#TotalCoste').text(total.toFixed(2));
+                            $('#TotalCoste').html(total.toFixed(2));
+                            $('#vendedor').val(respuesta['id_vendedor']);
+
+                            if(parseInt(respuesta['estado'])>0){
+
+                                estado = 'PAGADO';
+
+                            }
+                            else{
+
+                                $('#btnCompra').removeAttr('disabled');
+
+                            }
+
+                            $("#estado").val(estado);
 
                             $('#btnPDF').removeAttr('disabled');
 
@@ -459,6 +475,161 @@ $('#btnPDF').click(function(e){
     }
 
     return false;
+
+});
+
+/*======================================================
+BTNCompra
+=======================================================*/
+$('#btnCompra').click(function(e){
+
+    e.preventDefault();
+    var folio = parseInt($('#folio').val());
+
+    if(folio!='' && Number.isInteger(folio)){
+
+        var datos = new FormData();
+        datos.append('confirmar', folio);
+
+        $.ajax({
+
+            url: $rutaOculta+"ajax/cotizacion.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(respuesta){
+
+                console.log(respuesta);
+                if(respuesta == "true"){
+
+                    $('#estado').val('PAGADO');
+
+                }
+                else{
+
+                    swal(
+
+                        {
+
+                            title: "Error",
+                            text: "Lo sentimos, ocurrio un error, intentelo mas tarde",
+                            type: "error",
+                            confirmButtonText: "Cerrar",
+                            closeOnConfirm: true,
+
+                        },
+
+                    );
+
+                }
+
+            }
+
+        });
+
+    }
+    else{
+
+        swal(
+
+            {
+
+                title: "Error",
+                text: "Verifique que todos los campos esten completos",
+                type: "error",
+                confirmButtonText: "Cerrar",
+                closeOnConfirm: true,
+
+            },
+
+        );
+
+    }
+
+    return false;
+
+});
+
+/*=======================================================
+SUGERENCIAS Folio
+========================================================*/
+$("#folio").bind('keypress',function(e){
+
+    var regex = new RegExp("^[0-9]+$");
+    var key = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+    if(regex.test(key)){
+
+        var valor = $(this).val()+key;
+        $("#sugerenciasFolios").empty();
+        //console.log(valor);
+        var datos = new FormData();
+
+        datos.append('sugerencia', valor);
+
+        $.ajax({
+
+            url: $rutaOculta+"ajax/cotizacion.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(respuesta){
+
+                if(respuesta != "false"){
+
+                    respuesta = JSON.parse(respuesta);
+                    //console.log(respuesta.length);
+                    let sugerencia = "";
+                    if(respuesta.length>0){
+
+                        $.each(respuesta,function(key,valor){
+
+                            sugerencia += '<option value="'+valor['id']+'">'+valor['id']+' '+valor['nombre_cliente']+' '+valor['telefono']+'</option>';
+
+                        });
+                        $("#sugerenciasFolios").append(sugerencia);
+
+                    }
+
+                }
+                else{
+
+                    swal(
+
+                        {
+
+                            title: "Error",
+                            text: "Lo sentimos, ocurrio un error, intentelo mas tarde",
+                            type: "error",
+                            confirmButtonText: "Cerrar",
+                            closeOnConfirm: true,
+
+                        },
+
+                    );
+
+                }
+
+            }
+
+        });
+
+    }
+    else{
+
+        e.preventDefault();
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code==13){
+
+            $("#btnBuscarFolio").click();
+
+        }
+
+    }
 
 });
 

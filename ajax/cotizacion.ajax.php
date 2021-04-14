@@ -115,58 +115,95 @@
                         "subtotal"=> '',
                     );
 
-                    $cotizacion = ControladorCotizacion::ctrRegistroCotizacion($datosCotizacion);
+                    $conexion = Conexion::conectar();
+
+                    Conexion::iniciarTransaccion($conexion);
+
+                    $cotizacion = ControladorCotizacion::ctrRegistroCotizacion($datosCotizacion,$conexion);
 
                     if($cotizacion && is_numeric($cotizacion)){
 
-                        $subtotal = 0;
-                        $itemProducto = 'SKU';
+                        try{
 
-                        foreach($this->sku as $key => $sku1){
+                            $subtotal = 0;
+                            $itemProducto = 'SKU';
+                            $detalle = true;
 
-                            $valorProducto = $sku1;
-                            $producto = ControladorProductos::ctrMostrarInfoProducto($itemProducto,$valorProducto);
-                            $precio = (($producto['descuentoOferta']>0)? $producto['precioOferta']:$producto['precio']);
-                            $importe = $this->cantidad[$key]*$precio;
+                            foreach($this->sku as $key => $sku1){
 
-                            $datosDetalleCotizacion = array(
-                                "id" => ($key+1),
-                                "cotizacion_id"=>$cotizacion,
-                                "producto_id"=>$producto['id'],
-                                "cantidad"=> $this->cantidad[$key],
-                                "precio_unitario"=> $producto['precio'],
-                                "descuentoOferta"=> $producto['descuentoOferta'],
-                                'precioDescuento'=> $producto['precioOferta'],
-                            );
+                                $valorProducto = $sku1;
+                                $producto = ControladorProductos::ctrMostrarInfoProducto($itemProducto,$valorProducto,$conexion);
+                                $precio = (($producto['descuentoOferta']>0)? $producto['precioOferta']:$producto['precio']);
+                                $importe = $this->cantidad[$key]*$precio;
 
-                            $detalle_cotizacion = ControladorCotizacion::ctrRegistroDetalleCotizacion($datosDetalleCotizacion);
-                            $subtotal += $importe;
+                                $datosDetalleCotizacion = array(
+                                    "id" => ($key+1),
+                                    "cotizacion_id"=>$cotizacion,
+                                    "producto_id"=>$producto['id'],
+                                    "cantidad"=> $this->cantidad[$key],
+                                    "precio_unitario"=> $producto['precio'],
+                                    "descuentoOferta"=> $producto['descuentoOferta'],
+                                    'precioDescuento'=> $producto['precioOferta'],
+                                );
 
-                        }
+                                $detalle_cotizacion = ControladorCotizacion::ctrRegistroDetalleCotizacion($datosDetalleCotizacion);
+                                if($detalle_cotizacion!='ok'){
 
-                        $datosActualizaCotizacion = array(
-                            'id' => $cotizacion,
-                            "valor"=> $subtotal,
-                        );
+                                    $detalle = false;
+                                    break;
 
-                        $itemActualizaCotizacion = 'subtotal';
-                        $actualiza = ControladorCotizacion::ctrActualizarCotizacion($datosActualizaCotizacion,$itemActualizaCotizacion);
+                                }
+                                else{
 
-                        if($subtotal<500){
+                                    $subtotal += $importe;
+
+                                }
+
+                            }
 
                             $datosActualizaCotizacion = array(
                                 'id' => $cotizacion,
-                                "valor"=> $this->envio,
+                                "valor"=> $subtotal,
                             );
 
-                            $itemActualizaCotizacion = 'envio';
-                            $actualiza = ControladorCotizacion::ctrActualizarCotizacion($datosActualizaCotizacion,$itemActualizaCotizacion);
+                            $itemActualizaCotizacion = 'subtotal';
+                            $actualizaSubtotal = ControladorCotizacion::ctrActualizarCotizacion($datosActualizaCotizacion,$itemActualizaCotizacion);
+
+                            $actualizaEnvio = true;
+                            if($subtotal<500){
+
+                                $datosActualizaCotizacion = array(
+                                    'id' => $cotizacion,
+                                    "valor"=> $this->envio,
+                                );
+
+                                $itemActualizaCotizacion = 'envio';
+                                $actualizaEnvio = ControladorCotizacion::ctrActualizarCotizacion($datosActualizaCotizacion,$itemActualizaCotizacion);
+
+                            }
+
+                            $item = 'id';
+                            $valor = $cotizacion;
+                            $resultado = ControladorCotizacion::ctrInfoCotizacion($item,$valor);
+
+                            if($actualizaSubtotal && $actualizaEnvio && $detalle && $resultado){
+
+                                Conexion::commit($conexion);
+
+                            }
+                            else{
+
+                                Conexion::rollBack($conexion);
+
+                            }
 
                         }
+                        catch(PDOException $ex){
 
-                        $item = 'id';
-                        $valor = $cotizacion;
-                        $resultado = ControladorCotizacion::ctrInfoCotizacion($item,$valor);
+                            $respuesta = false;
+                            Conexion::rollBack($conexion);
+
+                        }
 
                     }
 
@@ -175,6 +212,35 @@
             }
 
             echo json_encode($resultado);
+
+        }
+
+        public function sugerenciaCotizacion(){
+
+            $valor = $this->folio;
+
+            if($valor=="" || $valor==null){
+
+                $valor=null;
+
+            }
+
+            $respuesta = ControladorCotizacion::ctrSugerenciaFolios($valor);
+            /* encode: convierte array en string */
+            echo json_encode($respuesta);
+            //echo json_encode($datos)
+
+        }
+
+        public function ajaxValidarCompra(){
+
+            $item = 'estado';
+            $datos = array('id' => $this->folio,
+                            'valor' => 1);
+
+            $respuesta = ControladorCotizacion::ctrActualizarCotizacion($datos,$item);
+
+            echo json_encode($respuesta);
 
         }
 
@@ -197,5 +263,31 @@
         $cotizacion = new CotizacionPDF();
         $cotizacion->folio = $_POST['folio'];
         $cotizacion->consultarCotizacion();
+
+    }
+    else if(isset($_POST['folio'])){
+
+        $cotizacion = new CotizacionPDF();
+        $cotizacion->folio = $_POST['folio'];
+        $cotizacion->consultarCotizacion();
+
+    }
+    else if(isset($_POST['sugerencia'])){
+
+        $cotizacion = new CotizacionPDF();
+        $cotizacion->folio = $_POST['sugerencia'];
+        $cotizacion->sugerenciaCotizacion();
+
+    }
+    else if(isset($_POST['confirmar'])){
+
+        $cotizacion = new CotizacionPDF();
+        $cotizacion->folio = $_POST['confirmar'];
+        $cotizacion->ajaxValidarCompra();
+
+    }
+    else{
+
+        echo json_encode('error');
 
     }
