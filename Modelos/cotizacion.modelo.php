@@ -101,7 +101,7 @@
             }
             catch(Exception $e){
 
-                return false;
+                return $ex->getMessage();
 
             }
 
@@ -117,7 +117,45 @@
         /*=====================================================
         RESGISTRO DE detalle_Cotizacion
         =====================================================*/
-        static public function mdlRegistroDetalleCotizacion($tabla,$datos,&$conexion=null){
+        static public function mdlActualizarDetalleCotizacion($tabla,$datos,&$conexion=null){
+
+            $pdo = ($conexion!=null)? $conexion : Conexion::conectar();
+            $stmt = $pdo->prepare("UPDATE $tabla 
+            SET $item = :$item 
+            WHERE id = :id");
+
+            $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+            $stmt->bindParam(":".$item, $datos["valor"], PDO::PARAM_STR);
+
+            try{
+
+                if($stmt->execute()){
+
+                    return 'ok';
+
+                }
+                else{
+
+                    return "error";
+
+                }
+
+            }
+            catch(Exception $e){
+
+                return $e->getMessage();
+
+            }
+
+            $stmt->close();
+            $stmt = null;
+
+        }
+
+        /*=====================================================
+        Actualizacion DE detalle_Cotizacion
+        =====================================================*/
+        static public function mdlRegistroDetalleCotizacion($tabla,$datos,$item,&$conexion=null){
 
             $pdo = ($conexion!=null)? $conexion : Conexion::conectar();
             $stmt = $pdo->prepare("INSERT INTO $tabla(id,cotizacion_id,producto_id,cantidad,precio_unitario,descuentoOferta,precioDescuento)

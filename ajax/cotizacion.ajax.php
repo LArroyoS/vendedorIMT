@@ -146,7 +146,7 @@
                                     'precioDescuento'=> $producto['precioOferta'],
                                 );
 
-                                $detalle_cotizacion = ControladorCotizacion::ctrRegistroDetalleCotizacion($datosDetalleCotizacion);
+                                $detalle_cotizacion = ControladorCotizacion::ctrRegistroDetalleCotizacion($datosDetalleCotizacion,$conexion);
                                 if($detalle_cotizacion!='ok'){
 
                                     $detalle = false;
@@ -167,7 +167,7 @@
                             );
 
                             $itemActualizaCotizacion = 'subtotal';
-                            $actualizaSubtotal = ControladorCotizacion::ctrActualizarCotizacion($datosActualizaCotizacion,$itemActualizaCotizacion);
+                            $actualizaSubtotal = ControladorCotizacion::ctrActualizarCotizacion($datosActualizaCotizacion,$itemActualizaCotizacion,$conexion);
 
                             $actualizaEnvio = true;
                             if($subtotal<500){
@@ -178,13 +178,13 @@
                                 );
 
                                 $itemActualizaCotizacion = 'envio';
-                                $actualizaEnvio = ControladorCotizacion::ctrActualizarCotizacion($datosActualizaCotizacion,$itemActualizaCotizacion);
+                                $actualizaEnvio = ControladorCotizacion::ctrActualizarCotizacion($datosActualizaCotizacion,$itemActualizaCotizacion,$conexion);
 
                             }
 
                             $item = 'id';
                             $valor = $cotizacion;
-                            $resultado = ControladorCotizacion::ctrInfoCotizacion($item,$valor);
+                            $resultado = ControladorCotizacion::ctrInfoCotizacion($item,$valor,$conexion);
 
                             if($actualizaSubtotal && $actualizaEnvio && $detalle && $resultado){
 
@@ -238,7 +238,7 @@
             $datos = array('id' => $this->folio,
                             'valor' => 1);
 
-            $respuesta = ControladorCotizacion::ctrActualizarCotizacion($datos,$item);
+            $respuesta = ControladorCotizacion::ctrActualizarCotizacion($datos,$item,$conexion);
 
             echo json_encode($respuesta);
 

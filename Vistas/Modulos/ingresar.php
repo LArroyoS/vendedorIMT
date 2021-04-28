@@ -66,9 +66,11 @@
                     </div>
                 </form>
 
+                <!--
                 <p class="mb-1">
                     <a href="<?php echo htmlspecialchars($urlVendedor); ?>cambiar_clave">¿Olvidaste tu contraseña?</a>
                 </p>
+                -->
 
             </div>
             <!-- /.card-body -->

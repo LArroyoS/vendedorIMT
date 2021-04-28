@@ -290,9 +290,9 @@
 
             <div class="modal-body">
 
-                <object id="areaFlayer" name="areaFlayer" width="100%" height="100%" data="<?php echo $urlServidor; ?>Vistas\flayers\Flayer2021Abril.pdf" type="application/pdf">
+                <object id="areaFlayer" name="areaFlayer" width="100%" height="100%" data="<?php echo $urlVendedor;//$urlServidor; ?>Vistas\flayers\Flayer2021Abril.pdf" type="application/pdf">
 
-                    <embed width="100%" height="100%" src="<?php echo $urlServidor; ?>Vistas\flayers\Flayer2021Abril.pdf" type="application/pdf"></embed>
+                    <embed width="100%" height="100%" src="<?php echo $urlVendedor;//$urlServidor; ?>Vistas\flayers\Flayer2021Abril.pdf" type="application/pdf"></embed>
 
                 </object>
 

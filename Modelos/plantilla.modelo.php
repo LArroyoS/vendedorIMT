@@ -11,10 +11,17 @@
 
             $stmt = Conexion::conectar()
                 ->prepare("SELECT * FROM $tabla");
-            $stmt -> execute();
 
-            return $stmt -> fetch();
+            try{
+                $stmt -> execute();
+                return $stmt -> fetch();
 
+            }
+            catch(PDOException $e){
+
+                return false;
+
+            }
             $stmt -> close();
 
             /* Anular objeto */

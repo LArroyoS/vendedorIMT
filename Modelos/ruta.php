@@ -7,7 +7,7 @@
         =============================================*/
         public function ctrRuta(){
 
-            return 'http://localhost/vendedorIMT/';
+            return 'https://localhost/vendedorIMT/';
 
         }
 
@@ -16,7 +16,7 @@
         =============================================*/
         public function ctrRutaServidor(){
 
-            return 'http://localhost/adminIMT/';
+            return 'https://localhost/adminIMT/';
 
         }
 

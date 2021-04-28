@@ -21,7 +21,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?php echo htmlspecialchars($urlVendedor); ?>" class="brand-link">
-        <img src="<?php echo htmlspecialchars($urlServidor); ?>/Vistas/img/plantilla/logo.png" alt="IMT Logo"
+        <img src="<?php echo htmlspecialchars($urlVendedor/*$urlServidor*/); ?>/Vistas/img/plantilla/logo.png" alt="IMT Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Vendedor</span>
     </a>
@@ -33,12 +33,12 @@
             <div class="image">
                 <?php if($_SESSION['foto'] != ''): ?>
 
-                    <img src="<?php echo htmlspecialchars($urlServidor.$_SESSION['foto']); ?>"
+                    <img src="<?php echo htmlspecialchars(/*$urlServidor*/$urlVendedor.$_SESSION['foto']); ?>"
                         class="img-circle elevation-2" alt="User Image">
 
                 <?php else: ?>
 
-                    <img src="<?php echo htmlspecialchars($urlServidor); ?>Vistas\img\usuarios\default\anonymous.png"
+                    <img src="<?php echo htmlspecialchars(/*$urlServidor*/$urlVendedor); ?>Vistas\img\usuarios\default\anonymous.png"
                             class="img-circle elevation-2" alt="User Image">
 
                 <?php endif; ?>

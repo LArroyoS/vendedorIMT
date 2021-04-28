@@ -263,7 +263,7 @@ $('#btnBuscarFolio').click(function(e){
                             {
 
                                 title: "Error",
-                                text: "Lo sentimos, ocurrio un error, intentelo mas tarde",
+                                text: "El folio que usted introdujo no existe",
                                 type: "error",
                                 confirmButtonText: "Cerrar",
                                 closeOnConfirm: true,

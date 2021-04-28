@@ -5,7 +5,7 @@
         public function conectar(){
 
             $host = "localhost";
-            $base = "vendedorimt";
+            $base = "vendedorIMT";
             $usuario = "root";
             $clave = "";
             $script = array( 
@@ -20,9 +20,9 @@
                     /* host               nombre base de datos  */
                     "mysql:host=$host;dbname=$base;",
                     /* usuario */
-                    "root",
+                    $usuario,
                     /* contaseña */
-                    "",
+                    $clave,
                     /* Establece que nos traiga escritura latina sin problemas */
                     $script
                 );
@@ -30,7 +30,7 @@
                 $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             }
-            catch(PDOException $e){
+            catch(Exception $e){
 
                 $link = false;
 

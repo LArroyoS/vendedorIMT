@@ -35,7 +35,7 @@ $("#btnBuscarTel").on('click',function(e){
 
                 $("#cliente").removeAttr('data-readonly');
                 $("#direccion").removeAttr('disabled');
-                swal(
+                /*swal(
 
                     {
 
@@ -48,6 +48,7 @@ $("#btnBuscarTel").on('click',function(e){
                     },
 
                 );
+                */
 
             }
 
