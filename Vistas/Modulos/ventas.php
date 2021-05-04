@@ -128,7 +128,7 @@
                                     <?php echo htmlspecialchars($value['subtotal']); ?>
                                 </td>
                                 <td>
-                                    <?php echo htmlspecialchars($value['estado']); ?>
+                                    <?php echo ($value['estado']>0)? 'PAGADO':'SIN PAGAR'; ?>
                                 </td>
                                 <td>
                                     <?php echo htmlspecialchars($value['fecha']); ?>
