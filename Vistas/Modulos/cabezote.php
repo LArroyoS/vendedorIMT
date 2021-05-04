@@ -93,6 +93,17 @@
 
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?php echo htmlspecialchars($urlVendedor); ?>ventas" 
+                        class="nav-link <?php echo (($valor=="consultar_folio")?'active':''); ?>">
+
+                        <i class="fas fa-shopping-bag"></i>
+                        <p>
+                            Ventas
+                        </p>
+
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

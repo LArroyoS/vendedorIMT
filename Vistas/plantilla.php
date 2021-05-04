@@ -26,7 +26,10 @@
                 $rutas[0] == "consultar_folio" ||
                 $rutas[0] == "salir" ||
                 $rutas[0] == 'ingresar' ||
-                $rutas[0] == 'cambiar_clave'){
+                $rutas[0] == 'cambiar_clave' ||
+                $rutas[0] == 'inicio' ||
+                $rutas[0] == 'ventas' ||
+                $rutas[0] == 'detalle_folio'){
 
                 $valor = $rutas[0];
 
@@ -79,16 +82,21 @@
 
     <input type="hidden" value="<?php echo $urlVendedor; ?>" id="rutaOculta">
 
-    <?php 
+    <?php if((isset($_SESSION['validarSesion']) && $_SESSION['validarSesion'] == 'ok')): ?>
 
-        if(
-            (isset($_SESSION['validarSesion']) && $_SESSION['validarSesion'] == 'ok')
-        ): 
+        <?php if($valor=='ingresar' || $valor=='cambiar_clave' || $valor==''): ?>
 
-            $valor = ($valor=='ingresar' || $valor=='cambiar_clave')? 'error':$valor;
-            $valor = (($valor!="")? $valor:'inicio');
+            <?php
 
-    ?>
+                echo "
+                    <script>
+                        window.location.href='".$urlVendedor."inicio';
+                    </script>";
+                exit;
+
+            ?>
+
+        <?php else: ?>
 
             <div class="wrapper">
 
@@ -150,6 +158,8 @@
             </div>
             <!-- ./wrapper -->
 
+        <?php endif; ?>
+
     <?php 
 
         else:
@@ -166,9 +176,12 @@
             }
             else{
 
-                header('Location: '.$urlVendedor.'ingresar'); 
+                //echo '<h1>'.$urlVendedor.'</h1>';
+                //header('Location: '.$urlVendedor.'ingresar'); 
+                echo "<script>window.location.href='".$urlVendedor."ingresar';</script>";
+                exit;
 
-            }   
+            }
 
         endif; 
 
@@ -188,8 +201,10 @@
     =========================================================-->
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoproducto.js?1.0"></script>
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoCliente.js?1.0"></script>
-    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoCotizacion.js?1.3"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/infoCotizacion.js?1.4"></script>
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/usuarios.js?1.3"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/plantilla.js?1.3"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/buscador.js?1.3"></script>
 
 </body>
 

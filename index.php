@@ -24,6 +24,12 @@
     require_once "Controladores/usuarios.controlador.php";
     require_once "Modelos/usuarios.modelo.php";
 
+    /*=======================================
+    COTIZACION
+    ========================================*/
+    require_once "Controladores/cotizacion.controlador.php";
+    require_once "Modelos/cotizacion.modelo.php";
+
     /*====================================================
     RUTA
     =====================================================*/

@@ -6,7 +6,7 @@
         /*====================================================
         REGISTRO Cotizacion
         ====================================================*/
-        public function ctrRegistroCotizacion($datos,&$conexion=null){
+        static public function ctrRegistroCotizacion($datos,&$conexion=null){
 
             $tabla = 'cotizacion';
 
@@ -19,7 +19,7 @@
         /*====================================================
         REGISTRO Cotizacion
         ====================================================*/
-        public function ctrInfoCotizacion($item,$valor,&$conexion=null){
+        static public function ctrInfoCotizacion($item,$valor,&$conexion=null){
 
             $tabla = 'cotizacion';
 
@@ -32,7 +32,7 @@
         /*====================================================
         REGISTRO Actualizar
         ====================================================*/
-        public function ctrActualizarCotizacion($datos,$item,&$conexion=null){
+        static public function ctrActualizarCotizacion($datos,$item,&$conexion=null){
 
             $tabla = 'cotizacion';
 
@@ -45,7 +45,7 @@
         /*====================================================
         REGISTRO detalle_cotizacion
         ====================================================*/
-        public function ctrRegistroDetalleCotizacion($datos,&$conexion=null){
+        static public function ctrRegistroDetalleCotizacion($datos,&$conexion=null){
 
             $tabla = 'detalle_cotizacion';
 
@@ -58,7 +58,7 @@
         /*====================================================
         Actualizar detalle_cotizacion
         ====================================================*/
-        public function ctrActualizarDetalleCotizacion($datos,$item,&$conexion=null){
+        static public function ctrActualizarDetalleCotizacion($datos,$item,&$conexion=null){
 
             $tabla = 'detalle_cotizacion';
 
@@ -69,9 +69,35 @@
         }
 
         /*====================================================
+        Buscar Cotizacion
+        ====================================================*/
+        static public function ctrBuscarCotizacion($busqueda,$base,$tope,$ordenar,$modo){
+
+            $tabla = 'cotizacion';
+
+            $respuesta = ModeloCotizacion::mdlBuscarCotizacion($tabla,$busqueda,$base,$tope,$ordenar,$modo);
+
+            return $respuesta;
+
+        }
+
+        /*=========================================
+        LISTAR cotizacion BUSCADOR
+        ==========================================*/
+        static public function ctrListarCotizacionBusqueda($busqueda){
+
+            $tabla = "cotizacion";
+
+            $respuesta = ModeloCotizacion::mdlListarCotizacionBusqueda($tabla,$busqueda);
+
+            return $respuesta;
+
+        }
+
+        /*====================================================
         REGISTRO lista detalle_cotizacion
         ====================================================*/
-        public function ctrListarDetalleCotizacion($ordenar,$item,$valor){
+        static public function ctrListarDetalleCotizacion($ordenar,$item,$valor){
 
             $tabla = 'detalle_cotizacion';
 

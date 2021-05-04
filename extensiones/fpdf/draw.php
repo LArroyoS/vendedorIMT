@@ -10,6 +10,8 @@ class Draw extends FPDF
 
     public function header(){
 
+        $urlVendedor = Ruta::ctrRuta();
+
         $this->SetFillColor(12,52,67);
         $this->Rect(0,0,216,34, 'F');
         
@@ -17,8 +19,8 @@ class Draw extends FPDF
         $this->SetDrawColor(255,189,59);
         $this->Polygon(array(181,0,216,0,216,35),'DF');
 
-        $this->Image('http://localhost/adminIMT/Vistas/img/plantilla/logo.png',160,4,40);
-        $this->Image('http://localhost/adminIMT/Vistas/img/plantilla/imtTexto.png',10,8,40);
+        $this->Image($urlVendedor.'Vistas/img/plantilla/logo.png',160,4,40);
+        $this->Image($urlVendedor.'Vistas/img/plantilla/imtTexto.png',10,8,40);
 
         $this->SetTextColor(255,189,59);
         $this->SetFont('arlon','B',35);

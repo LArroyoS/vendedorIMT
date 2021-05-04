@@ -279,4 +279,50 @@
 
         }
 
+        /*=========================================
+        BUSCADOR Cotizacion
+        ==========================================*/
+        static public function mdlBuscarCotizacion($tabla,$busqueda,$base,$tope,$ordenar, $modo){
+                
+            $stmt = Conexion::conectar()
+            ->prepare("SELECT * FROM $tabla 
+                WHERE id like '%$busqueda%' OR
+                telefono like '%$busqueda%' OR
+                nombre_cliente like '%$busqueda%'
+                ORDER BY $ordenar $modo 
+                LIMIT $base, $tope");
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+
+            $stmt->close();
+
+            /* Anular objeto */
+            $stmt = null;
+
+        }
+
+        /*=========================================
+        LISTAR cotizacion BUSCADOR
+        ==========================================*/
+        static public function mdlListarCotizacionBusqueda($tabla,$busqueda){
+                
+            $stmt = Conexion::conectar()
+            ->prepare("SELECT * FROM $tabla 
+                WHERE id like '%$busqueda%' OR
+                telefono like '%$busqueda%' OR
+                nombre_cliente like '%$busqueda%'");
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+
+            $stmt->close();
+
+            /* Anular objeto */
+            $stmt = null;
+
+        }
+
     }

@@ -22,7 +22,7 @@
 
         public function consultarCotizacion(){
 
-            $resultao = "error";
+            $resultado = "error";
             
             if($this->folio!=""){
 
@@ -256,13 +256,6 @@
         $cotizacion->cantidad = isset($_POST['cantidad'])? explode(',',$_POST['cantidad']): null;
         $cotizacion->sku = isset($_POST['SKU'])? explode(',',$_POST['SKU']): null;
         $cotizacion->generarCotizacion();
-
-    }
-    else if(isset($_POST['folio'])){
-
-        $cotizacion = new CotizacionPDF();
-        $cotizacion->folio = $_POST['folio'];
-        $cotizacion->consultarCotizacion();
 
     }
     else if(isset($_POST['folio'])){

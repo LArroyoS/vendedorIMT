@@ -1,5 +1,6 @@
 <?php 
 
+    require_once "../Modelos/ruta.php";
     require_once "../extensiones/fpdf/draw.php";
     require_once "../Controladores/productos.controlador.php";
     require_once "../Modelos/productos.modelo.php";
@@ -137,18 +138,18 @@
             $fpdf->SetFont($tipoLetra,'B',$tamLetra);
             $fpdf->Cell(35,$alto,utf8_decode("FOLIO:"),'LT',0,'',false);
             $fpdf->SetFont($tipoLetra,'',$tamLetra);
-            $fpdf->Cell(130,$alto,utf8_decode($this->folio),'TR',0,"",false);
+            $fpdf->Cell(110,$alto,utf8_decode($this->folio),'TR',0,"",false);
             $fpdf->SetFont($tipoLetra,'B',$tamLetra);
-            $fpdf->Cell(30,$alto,utf8_decode("FECHA:"),'TLR',0,'C','',false);
+            $fpdf->Cell(50,$alto,utf8_decode("FECHA:"),'TLR',0,'C','',false);
             $fpdf->Ln();
             $fpdf->SetFont($tipoLetra,'B',$tamLetra);
             $fpdf->Cell(35,$alto,utf8_decode("VENDEDOR:"),'LB',0,'',false);
             $fpdf->SetFont($tipoLetra,'',$tamLetra);
-            $fpdf->Cell(130,$alto,utf8_decode($vendedor['nombre']),'BR',0,'',false);
+            $fpdf->Cell(110,$alto,utf8_decode($vendedor['nombre']),'BR',0,'',false);
 
             $fecha = strtotime($cotizacion['fecha']);
 
-            $fpdf->Cell(30,$alto,utf8_decode(date('d/m/Y',$fecha)),'BLR',0,'C'.false);
+            $fpdf->Cell(50,$alto,utf8_decode(date('d-m-Y h:i:sa',$fecha)),'BLR',0,'C'.false);
             $fpdf->Ln(11);
 
             /*================================================================================
