@@ -104,6 +104,17 @@
 
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?php echo htmlspecialchars($urlVendedor); ?>hoja16" 
+                        class="nav-link <?php echo (($valor=="hoja16")?'active':''); ?>">
+
+                        <i class="fas fa-sim-card"></i>
+                        <p>
+                            Hoja 16
+                        </p>
+
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

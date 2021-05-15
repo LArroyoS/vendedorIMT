@@ -29,7 +29,8 @@
                 $rutas[0] == 'cambiar_clave' ||
                 $rutas[0] == 'inicio' ||
                 $rutas[0] == 'ventas' ||
-                $rutas[0] == 'detalle_folio'){
+                $rutas[0] == 'detalle_folio' ||
+                $rutas[0] == 'hoja16'){
 
                 $valor = $rutas[0];
 
@@ -62,19 +63,24 @@
     <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="<?php echo $urlVendedor; ?>Vistas/css/plugins/sweetalert.css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/css/plugins/sweetalert.css">
     <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="<?php echo $urlVendedor; ?>Vistas/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
     <!--=======================================================
     JS
     =========================================================-->
-    <script src="<?php echo $urlVendedor; ?>Vistas/js/plugins/sweetalert.min.js"></script>
+
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/jquery/jquery.min.js"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/plugins/sweetalert.min.js"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/plugins/jspdf.min.js"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/plugins/html2canvas.js"></script>
 
     <!--=======================================================
     MIS ESTILOS
     =========================================================-->
     <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/css/plantilla.css?1.3">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/css/hoja16.css?1.1" />
 
 </head>
 
@@ -96,8 +102,11 @@
 
             ?>
 
-        <?php else: ?>
+        <?php elseif($valor=='hoja16'): ?>
 
+            <?php include "Modulos/hoja16.php"; ?>
+
+        <?php else: ?>
             <div class="wrapper">
 
                 <?php include "Modulos/cabezote.php"; ?>
@@ -189,8 +198,6 @@
 
     <!-- REQUIRED SCRIPTS -->
 
-    <!-- jQuery -->
-    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
@@ -205,6 +212,7 @@
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/usuarios.js?1.3"></script>
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/plantilla.js?1.3"></script>
     <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/buscador.js?1.3"></script>
+    <script src="<?php echo htmlspecialchars($urlVendedor); ?>Vistas/js/Hoja16.js?2.3"></script>
 
 </body>
 
